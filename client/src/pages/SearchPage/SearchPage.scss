@@ -1,1 +1,47 @@
 @import "../../styles/globals.scss";
+
+.search {
+  width: 100%;
+
+  &__hero {
+    height: 150px;
+    width: 100%;
+    background-image: url("https://images.unsplash.com/photo-1542204165-65bf26472b9b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1267&q=80");
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  &__input-container {
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  &__input {
+    width: 200px;
+    border-radius: 20px;
+    border: 1px solid lightgrey;
+    padding: 8px 32px 8px 16px;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0px 0px 4px #0054fc;
+    }
+  }
+
+  &__search-button {
+    @include button;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &__search-icon {
+    fill: lightgrey;
+    height: 14px;
+    width: 14px;
+  }
+}
