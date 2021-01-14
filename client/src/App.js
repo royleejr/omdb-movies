@@ -1,40 +1,33 @@
-import React, { useEffect } from "react";
-import Axios from "axios";
-import logo from "./logo.svg";
-import "./App.css";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import "./App.scss";
+
+import SearchPage from "./pages/SearchPage/SearchPage";
+import MovieDetailsPage from "./pages/MovieDetailsPage/MovieDetailsPage";
+import NominationsPage from "./pages/NominationsPage/NominationsPage";
 
 function App() {
-  useEffect(() => {
-    fetchMovies();
-  }, []);
+  // useEffect(() => {
+  //   fetchMovies();
+  // }, []);
 
-  const fetchMovies = () => {
-    Axios.get(`http://localhost:8080/search/${"ram"}`)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  // const fetchMovies = () => {
+  //   Axios.get(`http://localhost:8080/search/${"ram"}`)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/" exact component={SearchPage} />
+        <Route path="/movie/:movieId" exact component={MovieDetailsPage} />
+        <Route path="/nominations" exact component={NominationsPage} />
+      </Switch>
+    </BrowserRouter>
   );
 }
 
