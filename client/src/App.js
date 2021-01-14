@@ -5,14 +5,18 @@ import "./App.css";
 
 function App() {
   useEffect(() => {
-    Axios.get("http://localhost:8080")
+    fetchMovies();
+  }, []);
+
+  const fetchMovies = () => {
+    Axios.get(`http://localhost:8080/search/${"ram"}`)
       .then((response) => {
-        console.log(response);
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  };
 
   return (
     <div className="App">
