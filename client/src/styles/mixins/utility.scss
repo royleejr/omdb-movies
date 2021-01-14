@@ -1,0 +1,55 @@
+@mixin breakpoint($breakpoint) {
+  @if $breakpoint == mobileM {
+    @media (min-width: $breakpoint-mobileM-width-min) {
+      @content;
+    }
+  }
+  @if $breakpoint == tabletS {
+    @media (min-width: $breakpoint-tabletS-width-min) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == tabletL {
+    @media (min-width: $breakpoint-tabletL-laptop-width-min) and (min-height: $breakpoint-tabletL-height-min) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == laptop {
+    @media (min-width: $breakpoint-tabletL-laptop-width-min) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == desktopS {
+    @media (min-width: $breakpoint-desktopS-width-min) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == desktopL {
+    @media (min-width: $breakpoint-desktopL-width-min) {
+      @content;
+    }
+  }
+}
+
+@mixin animation {
+  position: relative;
+  opacity: 0;
+}
+
+@mixin link {
+  text-decoration: none;
+  color: black;
+}
+
+@mixin button {
+  border: none;
+  background: none;
+
+  &:focus {
+    outline: none;
+  }
+}

@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import "./App.scss";
+import "./styles/App.scss";
 
 import SearchPage from "./pages/SearchPage/SearchPage";
 import MovieDetailsPage from "./pages/MovieDetailsPage/MovieDetailsPage";
