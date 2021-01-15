@@ -1,0 +1,42 @@
+@import "../../../styles/globals.scss";
+
+.button {
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+
+  &--primary {
+    @include button-base;
+    background-color: $color-white;
+    color: $color-pink;
+
+    &:hover {
+      background-color: $color-pink;
+      color: $color-white;
+    }
+  }
+
+  &--secondary {
+    @include button-base;
+    background-color: $color-pink;
+    color: $color-white;
+
+    &:hover {
+      background-color: $color-white;
+      color: $color-pink;
+    }
+  }
+
+  &--tertiary {
+    @include button;
+    @include label;
+    display: inline;
+    color: $color-white;
+    text-decoration: underline;
+    text-decoration-color: $color-white;
+
+    &:hover {
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+  }
+}

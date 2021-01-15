@@ -1,0 +1,98 @@
+@import "../../styles/globals.scss";
+
+.movie-card {
+  display: flex;
+  margin: 20px 0;
+
+  &--search {
+    flex-direction: row-reverse;
+    align-items: center;
+  }
+
+  &--nomination {
+    flex-direction: column;
+    width: calc(50% - 6px);
+  }
+
+  &__poster-container {
+    display: flex;
+
+    &--search {
+      z-index: 0;
+      flex-shrink: 0;
+      width: 65%;
+    }
+  }
+
+  &__poster {
+    width: 100%;
+
+    &--search {
+      border-radius: 10px;
+    }
+
+    &--nomination {
+      border-top-right-radius: 10px;
+      border-top-left-radius: 10px;
+    }
+  }
+
+  //TODO: potential enhancement to bring up the poster when its hovered on.
+  &__description {
+    background-image: linear-gradient(
+      to bottom,
+      $color-pink 60%,
+      $color-salmon
+    );
+    color: $color-white;
+
+    &--search {
+      z-index: 1;
+      position: absolute;
+      left: 16px;
+      flex-shrink: 0;
+      width: 55%;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    &--nomination {
+      padding: 16px;
+      border-bottom-right-radius: 10px;
+      border-bottom-left-radius: 10px;
+    }
+  }
+
+  &__year {
+    @include body-s;
+    display: inline-block;
+    padding: 4px;
+    border: 1px solid $color-white;
+    border-radius: 10px;
+    margin-bottom: 8px;
+  }
+
+  &__title {
+    @include heading-5;
+    margin-bottom: 24px;
+  }
+
+  &__link {
+    @include link;
+
+    &--nomination {
+      display: inline-flex;
+      padding-right: 10px;
+      border-right: 1px solid $color-white;
+      margin-right: 10px;
+    }
+  }
+
+  &__nominate {
+    margin-top: 10px;
+  }
+
+  &__links-container {
+    width: 100%;
+  }
+}
