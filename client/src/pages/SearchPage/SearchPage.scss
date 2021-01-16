@@ -59,4 +59,12 @@
     position: relative;
     padding: 20px 16px;
   }
+
+  &__show-more-button {
+    z-index: 10;
+    position: fixed;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }

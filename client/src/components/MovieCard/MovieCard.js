@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Button from "../shared/Button/Button";
 import "./MovieCard.scss";
 
-export default function MovieCard({ type, imageAlt }) {
+export default function MovieCard({ type, movie }) {
   return (
     <article className={`movie-card movie-card--${type}`}>
       <div
@@ -12,15 +12,19 @@ export default function MovieCard({ type, imageAlt }) {
       >
         <img
           className={`movie-card__poster movie-card__poster--${type}`}
-          alt={imageAlt}
-          src="https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg"
+          alt={`Movie poster for ${movie.Title}`}
+          src={
+            movie.Poster === "N/A"
+              ? "https://scifi-movies.com/images/site/en/affiche_nondisponible.jpg"
+              : movie.Poster
+          }
         ></img>
       </div>
       <div
         className={`movie-card__description movie-card__description--${type}`}
       >
-        "<span className="movie-card__year">2014</span>
-        <h2 className="movie-card__title">Guardians of the Galaxy</h2>
+        <span className="movie-card__year">{movie.Year}</span>
+        <h2 className="movie-card__title">{movie.Title}</h2>
         {type === "search" ? (
           <>
             <Link className="movie-card__link">
