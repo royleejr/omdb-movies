@@ -1,0 +1,18 @@
+@import "../../styles/globals.scss";
+
+.header {
+  height: 60px;
+  padding: 0 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__link {
+    cursor: pointer;
+  }
+
+  &__icon {
+    height: 30px;
+    fill: $color-pink;
+  }
+}

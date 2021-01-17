@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { ReactComponent as SearchSvg } from "../../assets/icons/search.svg";
 import MovieCard from "../../components/MovieCard/MovieCard";
+import Button from "../../components/shared/Button/Button";
 import {
   getNominations,
   addNomination,
@@ -125,10 +126,9 @@ export default function SearchPage() {
             ))
           : null}
       </section>
-
-      <button className="search__show-more-button" onClick={changePage}>
-        Show More
-      </button>
+      <div className="search__show-button-container">
+        <Button onClick={changePage} text="Show More" type="large" />
+      </div>
     </div>
   );
 }
