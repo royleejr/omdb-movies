@@ -86,24 +86,41 @@ const fetchNonExactData = (title, res) => {
         //if there are 10 unique items it'll just send the data.
         if (newData.length === 10) {
           res.send(newData);
+          newData.forEach((movie) => {
+            movieIdsSet.add(movie.imdbID);
+          });
           newData = [];
+          extraPage++;
         }
         //if there are more than 10 items, we will slice so it sends just 10 and save the rest.
         else if (newData.length > 10) {
+          const sendData = [];
+          for (let i = 0; i < 10; i++) {
+            sendData.push(newData[i]);
+          }
           const slicedData = newData.slice(10);
           newData = slicedData;
+
+          sendData.forEach((movie) => {
+            movieIdsSet.add(movie.imdbID);
+          });
+          extraPage++;
+          res.send(sendData);
         }
         //if there are less than 10, we will make another call.
         else {
-          fetchNonExactData();
+          extraPage++;
+          newData.forEach((movie) => {
+            movieIdsSet.add(movie.imdbID);
+          });
+          fetchNonExactData(title, res);
         }
         if (!toggle) {
           toggle = true;
         }
-        extraPage++;
       } else {
         //no more data
-        res.send("no data");
+        res.send(response.data);
 
         if (toggle) {
           toggle = false;

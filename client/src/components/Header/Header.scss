@@ -1,11 +1,16 @@
 @import "../../styles/globals.scss";
 
 .header {
-  height: 60px;
-  padding: 0 16px;
+  @include resolution-padding;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 60px;
+
+  @include breakpoint(desktopL) {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
 
   &__link {
     cursor: pointer;

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import Dotdotdot from "react-dotdotdot";
 import Button from "../shared/Button/Button";
 import "./MovieCard.scss";
 
@@ -30,7 +30,10 @@ export default function MovieCard({
         className={`movie-card__description movie-card__description--${type}`}
       >
         <span className="movie-card__year">{movie.Year}</span>
-        <h2 className="movie-card__title">{movie.Title}</h2>
+        <Dotdotdot clamp={6}>
+          <h2 className="movie-card__title">{movie.Title}</h2>
+        </Dotdotdot>
+
         {type === "search" ? (
           <>
             <Link className="movie-card__link" to={`/movie/${movie.imdbID}`}>

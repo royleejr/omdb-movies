@@ -16,6 +16,7 @@ export default function SearchPage() {
   const [moviesData, setMoviesData] = useState([]);
   const [moviePage, setMoviePage] = useState(1);
   const [nominations, setNominations] = useState([]);
+  const [moreAvailable, setMoreAvailable] = useState(true);
 
   useEffect(() => {
     getNominations()
@@ -72,14 +73,21 @@ export default function SearchPage() {
     axios
       .get(`http://localhost:8080/search/${movieInput}/${moviePage}`)
       .then((response) => {
-        if (response.data !== "no data") {
+        if (response.data.Response !== "False") {
           if (moviePage > 1) {
             setMoviesData(moviesData.concat(response.data));
           } else {
+            setMoreAvailable(true);
             setMoviesData(response.data);
           }
         } else {
-          if (moviesData.length !== 0) {
+          if (response.data.Error !== "Too many results." || !response.data) {
+            setMoreAvailable(false);
+            if (moviePage === 1) {
+              setMoviesData([]);
+            }
+          }
+          if (response.data.Error === "Too many results.") {
             setMoviesData([]);
           }
         }
@@ -126,9 +134,11 @@ export default function SearchPage() {
             ))
           : null}
       </section>
-      <div className="search__show-button-container">
-        <Button onClick={changePage} text="Show More" type="large" />
-      </div>
+      {moreAvailable && moviesData.length > 0 ? (
+        <div className="search__show-button-container">
+          <Button onClick={changePage} text="Show More" type="large" />
+        </div>
+      ) : null}
     </div>
   );
 }

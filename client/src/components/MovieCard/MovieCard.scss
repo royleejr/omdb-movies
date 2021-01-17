@@ -2,11 +2,20 @@
 
 .movie-card {
   display: flex;
+  position: relative;
 
   &--search {
     margin: 20px 0;
     flex-direction: row-reverse;
     align-items: center;
+
+    @include breakpoint(tabletS) {
+      width: 48%;
+    }
+
+    @include breakpoint(laptop) {
+      width: 32%;
+    }
   }
 
   &--nomination {
@@ -24,6 +33,7 @@
     flex-grow: 0;
     height: 0;
     overflow: hidden;
+    box-shadow: 1px -1px 28px -4px rgba(0, 0, 0, 0.55);
 
     &--search {
       z-index: 0;
@@ -69,6 +79,10 @@
       width: 55%;
       padding: 20px;
       border-radius: 10px;
+
+      @include breakpoint(tabletS) {
+        left: 0;
+      }
     }
 
     &--nomination {

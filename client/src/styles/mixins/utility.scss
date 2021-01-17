@@ -35,6 +35,26 @@
   }
 }
 
+@mixin resolution-padding {
+  padding: 0 16px;
+
+  @include breakpoint(tabletS) {
+    padding: 0 32px;
+  }
+
+  @include breakpoint(laptop) {
+    padding: 0 64px;
+  }
+
+  @include breakpoint(desktopS) {
+    padding: 0 100px;
+  }
+
+  @include breakpoint(desktopL) {
+    padding: 0 120px;
+  }
+}
+
 @mixin animation {
   position: relative;
   opacity: 0;
