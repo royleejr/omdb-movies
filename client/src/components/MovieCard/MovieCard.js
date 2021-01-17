@@ -20,7 +20,7 @@ export default function MovieCard({
           className={`movie-card__poster movie-card__poster--${type}`}
           alt={`Movie poster for ${movie.Title}`}
           src={
-            movie.Poster === "N/A"
+            movie.Poster === "N/A" || !movie.Poster
               ? "https://scifi-movies.com/images/site/en/affiche_nondisponible.jpg"
               : movie.Poster
           }

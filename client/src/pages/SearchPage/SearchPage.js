@@ -69,6 +69,8 @@ export default function SearchPage() {
     }
   };
 
+  console.log(moviesData, "data");
+
   const fetchMovies = () => {
     axios
       .get(`http://localhost:8080/search/${movieInput}/${moviePage}`)

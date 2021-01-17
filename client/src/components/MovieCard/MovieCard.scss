@@ -19,11 +19,38 @@
   }
 
   &--nomination {
-    margin: 10px 0;
     flex-direction: column;
-    width: calc(50% - 6px);
     flex-grow: 0;
     flex-shrink: 0;
+    width: calc(50% - 6px);
+    margin: 10px 0;
+    box-shadow: 1px -1px 28px -10px rgba(0, 0, 0, 0.55);
+
+    @include breakpoint(tabletS) {
+      width: calc(50% - 16px);
+      margin: 16px 0;
+      box-shadow: 1px -1px 28px -4px rgba(0, 0, 0, 0.55);
+    }
+
+    @include breakpoint(laptop) {
+      width: calc(33% - 24px);
+      margin: 24px 0;
+    }
+
+    @include breakpoint(laptop) {
+      width: calc(25% - 24px);
+      margin: 24px 0;
+    }
+
+    @include breakpoint(desktopS) {
+      width: calc(25% - 32px);
+      margin: 16px 0;
+    }
+
+    @include breakpoint(desktopL) {
+      width: calc(20% - 32px);
+      margin: 16px 0;
+    }
   }
 
   &__poster-container {
@@ -33,18 +60,23 @@
     flex-grow: 0;
     height: 0;
     overflow: hidden;
-    box-shadow: 1px -1px 28px -4px rgba(0, 0, 0, 0.55);
 
     &--search {
       z-index: 0;
       width: 65%;
       padding-top: calc(0.65 * 322 / 223 * 100%);
       border-radius: 10px;
+      box-shadow: 1px -1px 28px -4px rgba(0, 0, 0, 0.55);
     }
 
     &--nomination {
       width: 100%;
       padding-top: calc(322 / 223 * 100%);
+
+      @include breakpoint(tabletS) {
+        width: 100%;
+        padding-top: calc(0.65 * 322 / 223 * 100%);
+      }
     }
   }
 
@@ -59,6 +91,7 @@
     &--nomination {
       border-top-right-radius: 10px;
       border-top-left-radius: 10px;
+      object-fit: cover;
     }
   }
 

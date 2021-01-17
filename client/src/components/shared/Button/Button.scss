@@ -38,6 +38,10 @@
       transform: translateY(-2px);
       text-decoration: none;
     }
+
+    @include breakpoint(tabletS) {
+      @include body-s;
+    }
   }
 
   &--large {

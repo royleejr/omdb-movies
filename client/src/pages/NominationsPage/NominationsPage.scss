@@ -2,20 +2,38 @@
 
 .nominations {
   &__hero {
+    @include hero-sizing;
     display: flex;
     align-items: flex-end;
-    width: 100%;
-    height: 170px;
     padding: 16px;
     background-image: url("../../assets/images/hero-1.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+
+    @include breakpoint(tabletS) {
+      padding: 32px;
+    }
+
+    @include breakpoint(laptop) {
+      padding: 64px;
+    }
+
+    @include breakpoint(desktopS) {
+      padding: 100px;
+    }
+
+    @include breakpoint(desktopL) {
+      padding: 120px;
+    }
   }
 
   &__heading {
     @include heading-3;
     color: $color-white;
+
+    @include breakpoint(desktopL) {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
   }
 
   &__movie-card-container {
@@ -23,5 +41,29 @@
     justify-content: space-between;
     flex-wrap: wrap;
     padding: 20px 16px;
+
+    @include breakpoint(tabletS) {
+      padding: 16px 32px;
+    }
+
+    @include breakpoint(laptop) {
+      padding: 16px 64px;
+      justify-content: space-evenly;
+      // &:after {
+      //   content: " ";
+      //   display: block;
+      //   width: 32%;
+      // }
+    }
+
+    @include breakpoint(desktopS) {
+      padding: 32px 76px;
+    }
+
+    @include breakpoint(desktopL) {
+      padding: 64px 100px;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
   }
 }

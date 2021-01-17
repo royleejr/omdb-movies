@@ -61,6 +61,18 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+
+  @include breakpoint(tabletS) {
+    height: 240px;
+  }
+
+  @include breakpoint(desktopS) {
+    height: 280px;
+  }
+
+  @include breakpoint(desktopL) {
+    height: 340px;
+  }
 }
 
 @mixin animation {

@@ -9,18 +9,6 @@
     justify-content: center;
     align-items: flex-end;
     background-image: url("../../assets/images/hero-3.jpg");
-
-    @include breakpoint(tabletS) {
-      height: 240px;
-    }
-
-    @include breakpoint(desktopS) {
-      height: 280px;
-    }
-
-    @include breakpoint(desktopL) {
-      height: 340px;
-    }
   }
 
   &__form {
