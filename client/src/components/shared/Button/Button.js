@@ -10,7 +10,8 @@ export default function Button({
   link,
 }) {
   const clickHandler = () => {
-    if (type === "secondary") {
+    if (type === "secondary" || type === "large") {
+      console.log("IT IS");
       handleNominations(movie, text);
     } else if (type === "tertiary" && !link) {
       handleRemove(movie);

@@ -18,10 +18,10 @@
   }
 
   &__poster-container {
+    position: relative;
     display: flex;
     flex-shrink: 0;
     flex-grow: 0;
-    position: relative;
     height: 0;
     overflow: hidden;
 
