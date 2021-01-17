@@ -78,7 +78,11 @@ export default function SearchPage() {
       <section className="search__movie-card-container">
         {moviesData
           ? moviesData.map((movie) => (
-              <MovieCard type="search" movie={movie} key={movie.imdbID} />
+              <MovieCard
+                type="search"
+                movie={movie}
+                key={`search-${movie.imdbID}`}
+              />
             ))
           : null}
       </section>
