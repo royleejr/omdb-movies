@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { ReactComponent as SearchSvg } from "../../assets/icons/search.svg";
-
 import MovieCard from "../../components/MovieCard/MovieCard";
+import {
+  getNominations,
+  addNomination,
+  removeNomination,
+} from "../../utilities/nominationsApiRequests";
 import "./SearchPage.scss";
 
 //TODO: MAKE AN H1 SOMEWHERE
@@ -10,6 +14,17 @@ export default function SearchPage() {
   const [movieInput, setMovieInput] = useState("");
   const [moviesData, setMoviesData] = useState([]);
   const [moviePage, setMoviePage] = useState(1);
+  const [nominations, setNominations] = useState([]);
+
+  useEffect(() => {
+    getNominations()
+      .then((response) => {
+        setNominations(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   useEffect(() => {
     if (movieInput) {
@@ -22,6 +37,28 @@ export default function SearchPage() {
       fetchMovies();
     }
   }, [moviePage]);
+
+  const handleNominations = (movie, text) => {
+    if (text === "Remove") {
+      removeNomination(movie)
+        .then((response) => {
+          setNominations(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      addNomination(movie)
+        .then((response) => {
+          if (response.data) {
+            setNominations(response.data);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
 
   const handleInputChange = (event) => {
     setMovieInput(event.target.value);
@@ -82,6 +119,8 @@ export default function SearchPage() {
                 type="search"
                 movie={movie}
                 key={`search-${movie.imdbID}`}
+                handleNominations={handleNominations}
+                nominations={nominations}
               />
             ))
           : null}

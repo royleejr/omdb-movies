@@ -4,7 +4,13 @@ import { Link } from "react-router-dom";
 import Button from "../shared/Button/Button";
 import "./MovieCard.scss";
 
-export default function MovieCard({ type, movie }) {
+export default function MovieCard({
+  type,
+  movie,
+  nominations,
+  handleNominations,
+  handleRemove,
+}) {
   return (
     <article className={`movie-card movie-card--${type}`}>
       <div
@@ -27,19 +33,37 @@ export default function MovieCard({ type, movie }) {
         <h2 className="movie-card__title">{movie.Title}</h2>
         {type === "search" ? (
           <>
-            <Link className="movie-card__link">
-              <Button text="Movie Details" type="primary" />
+            <Link className="movie-card__link" to={`/movie/${movie.imdbID}`}>
+              <Button text="Movie Details" type="primary" link={"link"} />
             </Link>
             <div className="movie-card__nominate">
-              <Button text="Nominate" type="secondary" />
+              <Button
+                text={
+                  nominations.find((nom) => nom.imdbID === movie.imdbID)
+                    ? "Remove"
+                    : "Nominate"
+                }
+                type="secondary"
+                movie={movie}
+                handleNominations={handleNominations}
+                nominations={nominations}
+              />
             </div>
           </>
         ) : (
           <div className="movie-card__links-container">
-            <Link className="movie-card__link movie-card__link--nomination">
-              <Button text="Details" type="tertiary" />
+            <Link
+              className="movie-card__link movie-card__link--nomination"
+              to={`/movie/${movie.imdbID}`}
+            >
+              <Button text="Details" type="tertiary" link={"link"} />
             </Link>
-            <Button text="Nominate" type="tertiary" />
+            <Button
+              text="Remove"
+              type="tertiary"
+              movie={movie}
+              handleRemove={handleRemove}
+            />
           </div>
         )}
       </div>
