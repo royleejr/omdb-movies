@@ -1,5 +1,7 @@
 # OMDb Movie Nomimations
 
+Link to live site: https://omdb-movies.netlify.app/
+
 ## Introduction
 
 This web application allows users to search for movies and save them as nominations for a hypothetical awards show. Users can make up to a maximum of five nominations; any existing nomination can be removed if desired. Movie information is obtained from the [Open Movie Database (OMDb) REST API](http://www.omdbapi.com/).
