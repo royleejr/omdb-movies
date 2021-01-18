@@ -38,8 +38,7 @@ export default function MovieDetailsPage({ match }) {
         setNominations(response[1].data);
       }
     });
-    //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [match.params.movieId]);
 
   useEffect(() => {
     const moreInfoContainer = document.getElementsByClassName(
@@ -54,8 +53,7 @@ export default function MovieDetailsPage({ match }) {
     } else {
       moreInfoContainer.setAttribute("style", `max-height: 0`);
     }
-    //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [infoOpen]);
+  }, [infoOpen, infoHeight]);
 
   const handleNominations = (movie, text) => {
     const banner = document.getElementsByClassName("banner")[0];
