@@ -111,7 +111,9 @@ export default function SearchPage() {
 
   const fetchMovies = () => {
     axios
-      .get(`http://localhost:5000/search/${movieInput}/${moviePage}`)
+      .get(
+        `https://omdb-movie-server.herokuapp.com/search/${movieInput}/${moviePage}`
+      )
       .then((response) => {
         if (response.data.Response !== "False") {
           if (moviePage > 1) {
