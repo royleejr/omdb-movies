@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { ReactComponent as SearchSvg } from "../../assets/icons/search.svg";
 import MovieCard from "../../components/MovieCard/MovieCard";
 import Button from "../../components/shared/Button/Button";
@@ -9,6 +8,7 @@ import {
   addNomination,
   removeNomination,
 } from "../../utilities/nominationsApiRequests";
+import { cancelApiRequests } from "../../utilities/cancelApiRequests";
 import "./SearchPage.scss";
 
 //TODO: MAKE AN H1 SOMEWHERE
@@ -109,34 +109,32 @@ export default function SearchPage() {
     }
   };
 
-  const fetchMovies = () => {
-    axios
-      .get(
-        `https://omdb-movie-server.herokuapp.com/search/${movieInput}/${moviePage}`
-      )
-      .then((response) => {
-        if (response.data.Response !== "False") {
-          if (moviePage > 1) {
-            setMoviesData(moviesData.concat(response.data));
-          } else {
-            setMoreAvailable(true);
-            setMoviesData(response.data);
-          }
+  const fetchMovies = async () => {
+    const res = await cancelApiRequests(
+      `https://omdb-movie-server.herokuapp.com/search/${movieInput}/${moviePage}`
+    );
+    if (res) {
+      if (res.Response !== "False") {
+        if (moviePage > 1) {
+          setMoviesData(moviesData.concat(res));
         } else {
-          if (response.data.Error !== "Too many results." || !response.data) {
-            setMoreAvailable(false);
-            if (moviePage === 1) {
-              setMoviesData([]);
-            }
-          }
-          if (response.data.Error === "Too many results.") {
+          setMoreAvailable(true);
+          setMoviesData(res);
+        }
+      } else {
+        if (res.Error !== "Too many results." || !res) {
+          setMoreAvailable(false);
+          if (moviePage === 1) {
             setMoviesData([]);
           }
         }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+        if (res.Error === "Too many results.") {
+          setMoviesData([]);
+        }
+      }
+    } else {
+      setMoviesData([]);
+    }
   };
 
   const changePage = (event) => {
