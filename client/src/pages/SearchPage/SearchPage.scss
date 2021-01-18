@@ -1,0 +1,157 @@
+@import "../../styles/globals.scss";
+
+.search {
+  width: 100%;
+
+  &__hero {
+    @include hero-sizing;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    background-image: url("../../assets/images/hero-3.jpg");
+  }
+
+  &__form {
+    position: relative;
+    margin-bottom: 20px;
+
+    @include breakpoint(tabletS) {
+      margin-bottom: 40px;
+    }
+
+    @include breakpoint(desktopS) {
+      margin-bottom: 60px;
+    }
+  }
+
+  &__input {
+    @include body-s;
+    width: 200px;
+    padding: 8px 32px 8px 16px;
+    border: 1px solid $color-black-40;
+    border-radius: 20px;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0px 0px 4px $color-turquoise;
+    }
+
+    @include breakpoint(tabletS) {
+      @include body;
+      width: 300px;
+      padding: 8px 32px 8px 20px;
+    }
+
+    @include breakpoint(desktopL) {
+      @include body-l;
+      width: 400px;
+      padding: 10px 32px 10px 32px;
+    }
+  }
+
+  &__search-container {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 80%;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0px 0px 4px $color-turquoise;
+    }
+
+    @include breakpoint(desktopL) {
+      right: 20px;
+    }
+  }
+
+  &__search-icon {
+    width: 12px;
+    height: 12px;
+    fill: $color-black-40;
+
+    @include breakpoint(desktopL) {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  &__movie-card-container {
+    padding: 20px 16px;
+
+    @include breakpoint(tabletS) {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 20px 32px;
+
+      &:after {
+        content: " ";
+        display: block;
+        width: 32%;
+      }
+    }
+
+    @include breakpoint(laptop) {
+      padding: 20px 64px;
+    }
+
+    @include breakpoint(desktopS) {
+      padding: 20px 100px;
+    }
+
+    @include breakpoint(desktopL) {
+      padding: 20px 120px;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+  }
+
+  &__message-container {
+    @include body-s;
+    width: 100%;
+    margin-top: 60px;
+    color: $color-black-80;
+    text-align: center;
+
+    @include breakpoint(tabletS) {
+      @include body;
+    }
+
+    @include breakpoint(desktopL) {
+      @include body-l;
+    }
+  }
+
+  &__message {
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+
+  &__message-two {
+    color: $color-pink;
+  }
+
+  &__show-button-container {
+    width: 40%;
+    margin: 0 auto 40px;
+
+    @include breakpoint(laptop) {
+      margin: 20px auto 80px;
+    }
+
+    @include breakpoint(desktopS) {
+      width: 20%;
+    }
+
+    @include breakpoint(desktopL) {
+      width: 15%;
+    }
+  }
+}

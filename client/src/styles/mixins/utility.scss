@@ -1,0 +1,102 @@
+@mixin breakpoint($breakpoint) {
+  @if $breakpoint == mobileM {
+    @media (min-width: $breakpoint-mobileM-width-min) {
+      @content;
+    }
+  }
+  @if $breakpoint == tabletS {
+    @media (min-width: $breakpoint-tabletS-width-min) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == tabletL {
+    @media (min-width: $breakpoint-tabletL-laptop-width-min) and (min-height: $breakpoint-tabletL-height-min) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == laptop {
+    @media (min-width: $breakpoint-tabletL-laptop-width-min) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == desktopS {
+    @media (min-width: $breakpoint-desktopS-width-min) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == desktopL {
+    @media (min-width: $breakpoint-desktopL-width-min) {
+      @content;
+    }
+  }
+}
+
+@mixin resolution-padding {
+  padding: 0 16px;
+
+  @include breakpoint(tabletS) {
+    padding: 0 32px;
+  }
+
+  @include breakpoint(laptop) {
+    padding: 0 64px;
+  }
+
+  @include breakpoint(desktopS) {
+    padding: 0 100px;
+  }
+
+  @include breakpoint(desktopL) {
+    padding: 0 120px;
+  }
+}
+
+@mixin hero-sizing {
+  width: 100%;
+  height: 170px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  @include breakpoint(tabletS) {
+    height: 240px;
+  }
+
+  @include breakpoint(desktopS) {
+    height: 280px;
+  }
+
+  @include breakpoint(desktopL) {
+    height: 340px;
+  }
+}
+
+@mixin animation {
+  position: relative;
+  opacity: 0;
+}
+
+@mixin link {
+  text-decoration: none;
+}
+
+@mixin button-base {
+  @include body-s;
+  padding: 4px 14px;
+  border-radius: 20px;
+  border: 1px solid $color-white;
+
+  &:focus {
+    outline: $color-turquoise;
+    box-shadow: 0px 0px 8px $color-turquoise;
+  }
+}
+
+@mixin button {
+  border: none;
+  background: none;
+}

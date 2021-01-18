@@ -1,36 +1,28 @@
-import React, { useEffect } from "react";
-import Axios from "axios";
-import logo from "./logo.svg";
-import "./App.css";
+import React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import "./styles/App.scss";
+
+import Header from "./components/Header/Header";
+import SearchPage from "./pages/SearchPage/SearchPage";
+import MovieDetailsPage from "./pages/MovieDetailsPage/MovieDetailsPage";
+import NominationsPage from "./pages/NominationsPage/NominationsPage";
 
 function App() {
-  useEffect(() => {
-    Axios.get("http://localhost:8080")
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Header />
+      <Switch>
+        <Route path="/" exact render={(props) => <SearchPage {...props} />} />
+        <Route
+          path="/movie/:movieId"
+          render={(props) => <MovieDetailsPage {...props} />}
+        />
+        <Route
+          path="/nominations"
+          render={(props) => <NominationsPage {...props} />}
+        />
+      </Switch>
+    </BrowserRouter>
   );
 }
 
