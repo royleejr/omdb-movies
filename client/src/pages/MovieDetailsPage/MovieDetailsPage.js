@@ -27,7 +27,7 @@ export default function MovieDetailsPage({ match }) {
     moreInfoContainer.setAttribute("style", "max-height: 0px");
 
     const getMovie = axios.get(
-      `http://localhost:8080/search/id/${match.params.movieId}`
+      `http://localhost:5000/search/id/${match.params.movieId}`
     );
 
     Promise.all([getMovie, getNominations()]).then((response) => {

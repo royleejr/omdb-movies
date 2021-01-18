@@ -111,7 +111,7 @@ export default function SearchPage() {
 
   const fetchMovies = () => {
     axios
-      .get(`http://localhost:8080/search/${movieInput}/${moviePage}`)
+      .get(`http://localhost:5000/search/${movieInput}/${moviePage}`)
       .then((response) => {
         if (response.data.Response !== "False") {
           if (moviePage > 1) {
