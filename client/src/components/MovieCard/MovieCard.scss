@@ -38,16 +38,16 @@
     }
 
     @include breakpoint(laptop) {
-      width: calc(25% - 24px);
+      width: calc(33% - 24px);
       margin: 24px 0;
     }
 
-    @include breakpoint(desktopS) {
-      width: calc(25% - 32px);
-      margin: 16px 0;
-    }
+    // @include breakpoint(desktopS) {
+    //   width: calc(25% - 32px);
+    //   margin: 16px 0;
+    // }
 
-    @include breakpoint(desktopL) {
+    @include breakpoint(desktopS) {
       width: calc(20% - 32px);
       margin: 16px 0;
     }
@@ -107,15 +107,11 @@
     &--search {
       z-index: 1;
       position: absolute;
-      left: 16px;
+      left: 0;
       flex-shrink: 0;
       width: 55%;
       padding: 20px;
       border-radius: 10px;
-
-      @include breakpoint(tabletS) {
-        left: 0;
-      }
     }
 
     &--nomination {

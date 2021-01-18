@@ -11,52 +11,31 @@
 @mixin heading-2 {
   font-weight: 900;
   font-size: 48px;
-  line-height: 1.3;
-
-  @include breakpoint(desktopS) {
-    font-size: 56px;
-    line-height: 1.1;
-  }
+  line-height: 1;
 }
 
 @mixin heading-3 {
   font-weight: 900;
   font-size: 32px;
   line-height: 1;
-
-  @include breakpoint(desktopS) {
-    font-size: 40px;
-  }
 }
 
 @mixin heading-4 {
   font-weight: 900;
   font-size: 24px;
   line-height: 1;
-
-  @include breakpoint(desktopS) {
-    font-size: 32px;
-  }
 }
 
 @mixin heading-5 {
   font-weight: 600;
   font-size: 20px;
   line-height: 1.2;
-
-  @include breakpoint(desktopS) {
-    font-size: 24px;
-  }
 }
 
 @mixin heading-6 {
   font-weight: 400;
   font-size: 18px;
   line-height: 1.5;
-
-  @include breakpoint(desktopS) {
-    font-size: 24px;
-  }
 }
 
 @mixin body-xl {

@@ -3,6 +3,7 @@ import axios from "axios";
 import { ReactComponent as SearchSvg } from "../../assets/icons/search.svg";
 import MovieCard from "../../components/MovieCard/MovieCard";
 import Button from "../../components/shared/Button/Button";
+import Banner from "../../components/shared/Banner/Banner";
 import {
   getNominations,
   addNomination,
@@ -32,16 +33,25 @@ export default function SearchPage() {
     if (movieInput) {
       fetchMovies();
     }
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [movieInput]);
 
   useEffect(() => {
     if (moviePage !== 1) {
       fetchMovies();
     }
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [moviePage]);
 
   const handleNominations = (movie, text) => {
+    const banner = document.getElementsByClassName("banner")[0];
+    const bannerText = document.getElementsByClassName("banner__message")[0];
     if (text === "Remove") {
+      banner.classList.remove("banner--hide");
+      bannerText.innerText = "Successfully removed nomination!";
+      setTimeout(() => {
+        banner.classList.add("banner--hide");
+      }, 2000);
       removeNomination(movie)
         .then((response) => {
           setNominations(response.data);
@@ -50,15 +60,45 @@ export default function SearchPage() {
           console.log(error);
         });
     } else {
-      addNomination(movie)
-        .then((response) => {
-          if (response.data) {
-            setNominations(response.data);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (nominations.length < 4) {
+        banner.classList.remove("banner--hide");
+        bannerText.innerText = "Successfully added nomination!";
+        setTimeout(() => {
+          banner.classList.add("banner--hide");
+        }, 2000);
+
+        addNomination(movie)
+          .then((response) => {
+            if (response.data) {
+              setNominations(response.data);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else if (nominations.length === 4) {
+        banner.classList.remove("banner--hide");
+        bannerText.innerText = "You have finished making 5 nominations!";
+        setTimeout(() => {
+          banner.classList.add("banner--hide");
+        }, 2000);
+
+        addNomination(movie)
+          .then((response) => {
+            if (response.data) {
+              setNominations(response.data);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        banner.classList.remove("banner--hide");
+        bannerText.innerText = "Failed to nominate. You already have 5!";
+        setTimeout(() => {
+          banner.classList.add("banner--hide");
+        }, 2000);
+      }
     }
   };
 
@@ -68,8 +108,6 @@ export default function SearchPage() {
       setMoviePage(1);
     }
   };
-
-  console.log(moviesData, "data");
 
   const fetchMovies = () => {
     axios
@@ -118,12 +156,24 @@ export default function SearchPage() {
             value={movieInput}
             onChange={handleInputChange}
           ></input>
-          <button className="search__search-button" aria-label="submit search">
+          <div className="search__search-container" aria-label="submit search">
             <SearchSvg className="search__search-icon" />
-          </button>
+          </div>
         </form>
       </section>
+
       <section className="search__movie-card-container">
+        {!moviesData.length > 0 ? (
+          <div className="search__message-container">
+            <p className="search__message">
+              To get started, please enter a movie title into the search bar
+              above.
+            </p>
+            <p className="search__message-two">
+              Nominate up to 5 movies for the upcoming Shoppies!
+            </p>
+          </div>
+        ) : null}
         {moviesData
           ? moviesData.map((movie) => (
               <MovieCard
@@ -141,6 +191,7 @@ export default function SearchPage() {
           <Button onClick={changePage} text="Show More" type="large" />
         </div>
       ) : null}
+      <Banner />
     </div>
   );
 }

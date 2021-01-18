@@ -1,0 +1,35 @@
+@import "../../../styles/globals.scss";
+
+.banner {
+  @include body-s;
+  position: fixed;
+  opacity: 1;
+  bottom: 5%;
+  z-index: 10;
+  text-align: center;
+  width: 100%;
+  transition: opacity 0.5s ease-in-out, bottom 0.5s ease-in-out;
+
+  @include breakpoint(tabletS) {
+    @include body;
+    bottom: 7%;
+  }
+
+  &--hide {
+    opacity: 0;
+    bottom: 0;
+  }
+
+  &__message {
+    padding: 10px 20px;
+    border-radius: 20px;
+    background-color: $color-orange;
+    font-weight: 600;
+    box-shadow: 0px 0px 14px 2px rgba(255, 255, 255, 0.6);
+    border: 1px solid $color-white;
+
+    @include breakpoint(tabletS) {
+      padding: 14px 24px;
+    }
+  }
+}

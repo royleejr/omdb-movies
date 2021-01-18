@@ -49,8 +49,7 @@
     }
   }
 
-  &__search-button {
-    @include button;
+  &__search-container {
     position: absolute;
     top: 50%;
     right: 8px;
@@ -59,6 +58,8 @@
     height: 80%;
     border-radius: 20px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 
     &:focus {
       outline: none;
@@ -110,6 +111,31 @@
       max-width: 1440px;
       margin: 0 auto;
     }
+  }
+
+  &__message-container {
+    @include body-s;
+    width: 100%;
+    margin-top: 60px;
+    color: $color-black-80;
+    text-align: center;
+
+    @include breakpoint(tabletS) {
+      @include body;
+    }
+
+    @include breakpoint(desktopL) {
+      @include body-l;
+    }
+  }
+
+  &__message {
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+
+  &__message-two {
+    color: $color-pink;
   }
 
   &__show-button-container {

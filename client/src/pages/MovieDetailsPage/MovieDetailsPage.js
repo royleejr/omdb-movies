@@ -6,6 +6,7 @@ import {
   removeNomination,
 } from "../../utilities/nominationsApiRequests";
 import Button from "../../components/shared/Button/Button";
+import Banner from "../../components/shared/Banner/Banner";
 import { ReactComponent as Timer } from "../../assets/icons/timer.svg";
 import { ReactComponent as Imdb } from "../../assets/icons/imdb.svg";
 import { ReactComponent as Tomato } from "../../assets/icons/tomato.svg";
@@ -37,6 +38,7 @@ export default function MovieDetailsPage({ match }) {
         setNominations(response[1].data);
       }
     });
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -52,10 +54,18 @@ export default function MovieDetailsPage({ match }) {
     } else {
       moreInfoContainer.setAttribute("style", `max-height: 0`);
     }
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [infoOpen]);
 
   const handleNominations = (movie, text) => {
-    if (text === "Remove") {
+    const banner = document.getElementsByClassName("banner")[0];
+    const bannerText = document.getElementsByClassName("banner__message")[0];
+    if (text === "Remove Nomination") {
+      banner.classList.remove("banner--hide");
+      bannerText.innerText = "Successfully removed nomination!";
+      setTimeout(() => {
+        banner.classList.add("banner--hide");
+      }, 2000);
       removeNomination(movie)
         .then((response) => {
           setNominations(response.data);
@@ -64,15 +74,45 @@ export default function MovieDetailsPage({ match }) {
           console.log(error);
         });
     } else {
-      addNomination(movie)
-        .then((response) => {
-          if (response.data) {
-            setNominations(response.data);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (nominations.length < 4) {
+        banner.classList.remove("banner--hide");
+        bannerText.innerText = "Successfully added nomination!";
+        setTimeout(() => {
+          banner.classList.add("banner--hide");
+        }, 2000);
+
+        addNomination(movie)
+          .then((response) => {
+            if (response.data) {
+              setNominations(response.data);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else if (nominations.length === 4) {
+        banner.classList.remove("banner--hide");
+        bannerText.innerText = "You have finished making 5 nominations!";
+        setTimeout(() => {
+          banner.classList.add("banner--hide");
+        }, 2000);
+
+        addNomination(movie)
+          .then((response) => {
+            if (response.data) {
+              setNominations(response.data);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        banner.classList.remove("banner--hide");
+        bannerText.innerText = "Failed to nominate. You already have 5!";
+        setTimeout(() => {
+          banner.classList.add("banner--hide");
+        }, 2000);
+      }
     }
   };
 
@@ -89,7 +129,11 @@ export default function MovieDetailsPage({ match }) {
             <div className="movie-details__poster-container">
               <img
                 className="movie-details__poster"
-                src={movieDetails.Poster ? movieDetails.Poster : null}
+                src={
+                  movieDetails.Poster && movieDetails.Poster !== "N/A"
+                    ? movieDetails.Poster
+                    : "https://scifi-movies.com/images/site/en/affiche_nondisponible.jpg"
+                }
                 alt="movie poster"
               ></img>
             </div>
@@ -113,9 +157,34 @@ export default function MovieDetailsPage({ match }) {
               <div className="movie-details__genre">
                 {movieDetails.Genre ? movieDetails.Genre : "N/A"}
               </div>
+              <div className="movie-details__rating-container movie-details__rating-container--desktop">
+                <div className="movie-details__imdb-container">
+                  <Imdb className="movie-details__imdb-icon" />
+                  <div className="movie-details__all-rating">
+                    {movieDetails.imdbRating ? movieDetails.imdbRating : "N/A"}{" "}
+                    &#9733;
+                  </div>
+                </div>
+                <div className="movie-details__imdb-container">
+                  <Tomato className="movie-details__tomato-icon" />
+                  <div className="movie-details__all-rating">
+                    {movieDetails.Ratings && movieDetails.Ratings.length > 1
+                      ? movieDetails.Ratings[1].Value
+                      : "N/A"}
+                  </div>
+                </div>
+                <div className="movie-details__imdb-container">
+                  <Metacritic className="movie-details__meta-icon" />
+                  <div className="movie-details__all-rating">
+                    {movieDetails.Ratings && movieDetails.Ratings.length > 2
+                      ? movieDetails.Ratings[2].Value
+                      : "N/A"}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="movie-details__rating-container">
+          <div className="movie-details__rating-container movie-details__rating-container--mobile">
             <div className="movie-details__imdb-container">
               <Imdb className="movie-details__imdb-icon" />
               <div className="movie-details__all-rating">
@@ -126,13 +195,17 @@ export default function MovieDetailsPage({ match }) {
             <div className="movie-details__imdb-container">
               <Tomato className="movie-details__tomato-icon" />
               <div className="movie-details__all-rating">
-                {movieDetails.Ratings ? movieDetails.Ratings[1].Value : "N/A"}
+                {movieDetails.Ratings && movieDetails.Ratings.length > 1
+                  ? movieDetails.Ratings[1].Value
+                  : "N/A"}
               </div>
             </div>
             <div className="movie-details__imdb-container">
               <Metacritic className="movie-details__meta-icon" />
               <div className="movie-details__all-rating">
-                {movieDetails.Ratings ? movieDetails.Ratings[2].Value : "N/A"}
+                {movieDetails.Ratings && movieDetails.Ratings.length > 2
+                  ? movieDetails.Ratings[2].Value
+                  : "N/A"}
               </div>
             </div>
           </div>
@@ -175,11 +248,12 @@ export default function MovieDetailsPage({ match }) {
           text={
             nominations &&
             nominations.find((nom) => nom.imdbID === movieDetails.imdbID)
-              ? "Remove"
+              ? "Remove Nomination"
               : "Nominate"
           }
         />
       </div>
+      <Banner />
     </div>
   );
 }

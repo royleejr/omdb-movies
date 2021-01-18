@@ -6,15 +6,11 @@
   overflow-anchor: none;
 
   &__hero {
+    @include hero-sizing;
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    width: 100%;
-    height: 170px;
     background-image: url("../../assets/images/hero-2.jpg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
   }
 
   &__card {
@@ -24,14 +20,49 @@
     border-radius: 10px;
     margin: 0 16px;
     background-color: $color-white;
+
+    @include breakpoint(tabletS) {
+      width: calc(100% - 64px);
+      margin: 0 32px;
+    }
+
+    @include breakpoint(laptop) {
+      width: calc(100% - 128px);
+      margin: 0 64px;
+    }
+
+    @include breakpoint(desktopS) {
+      // width: calc(100% - 200px);
+      // margin: 0 100px;
+      max-width: 896px;
+      margin: 0 auto;
+    }
   }
 
   &__info-container {
     padding: 30px 20px 20px 20px;
+
+    @include breakpoint(tabletS) {
+      padding: 40px 30px 30px 30px;
+    }
+
+    @include breakpoint(laptop) {
+      padding: 60px 0px 40px 0px;
+      max-width: 618px;
+      margin: 0 auto;
+    }
+
+    @include breakpoint(desktopS) {
+      padding: 100px 0px 80px 0px;
+    }
   }
 
   &__top-container {
     display: flex;
+
+    @include breakpoint(laptop) {
+      justify-content: center;
+    }
   }
 
   &__poster-container {
@@ -43,6 +74,17 @@
     padding-top: calc(0.48 * 322 / 223 * 100%);
     border-radius: 10px;
     overflow: hidden;
+
+    @include breakpoint(tabletS) {
+      width: 45%;
+      padding-top: calc(0.45 * 322 / 223 * 100%);
+    }
+
+    @include breakpoint(tabletS) {
+      width: 40%;
+      padding-top: calc(0.4 * 322 / 223 * 100%);
+      margin-right: 20px;
+    }
   }
 
   &__poster {
@@ -56,19 +98,46 @@
 
   &__short-info-container {
     margin-left: 10px;
+
+    @include breakpoint(tabletS) {
+      margin-left: 30px;
+      display: flex;
+      flex-grow: 1;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    @include breakpoint(tabletS) {
+      margin-left: 20px;
+      padding-right: 10px;
+    }
   }
 
   &__year {
     @include heading-5;
+
+    @include breakpoint(tabletS) {
+      @include heading-4;
+    }
   }
 
   &__title {
     @include heading-4;
+
+    @include breakpoint(tabletS) {
+      @include heading-3;
+      margin-top: 10px;
+    }
   }
 
   &__rating {
     @include body;
     margin-top: 10px;
+
+    @include breakpoint(tabletS) {
+      @include heading-5;
+      margin-top: 20px;
+    }
   }
 
   &__duration-container {
@@ -76,12 +145,22 @@
     display: flex;
     align-items: center;
     margin-top: 10px;
+
+    @include breakpoint(tabletS) {
+      @include heading-5;
+    }
   }
 
   &__timer-icon {
     width: 14px;
     height: 14px;
     fill: $color-pink;
+
+    @include breakpoint(tabletS) {
+      width: 24px;
+      height: 24px;
+      margin-right: 4px;
+    }
   }
 
   &__duration {
@@ -91,6 +170,10 @@
   &__genre {
     @include body;
     margin-top: 10px;
+
+    @include breakpoint(tabletS) {
+      @include heading-5;
+    }
   }
 
   &__rating-container {
@@ -103,6 +186,20 @@
     @include breakpoint(mobileM) {
       justify-content: space-between;
     }
+
+    &--mobile {
+      @include breakpoint(tabletS) {
+        display: none;
+      }
+    }
+
+    &--desktop {
+      display: none;
+      @include breakpoint(tabletS) {
+        display: flex;
+        justify-content: flex-start;
+      }
+    }
   }
 
   &__imdb-container {
@@ -111,6 +208,10 @@
     padding: 6px 12px;
     border-radius: 20px;
     background-color: $color-orange;
+
+    @include breakpoint(tabletS) {
+      margin-right: 10px;
+    }
   }
 
   &__imdb-icon {
@@ -133,11 +234,20 @@
   &__plot {
     @include body-s;
     margin-top: 20px;
+
+    @include breakpoint(tabletS) {
+      @include body-m;
+      margin-top: 30px;
+    }
   }
 
   &__more-info-container {
     margin-top: 20px;
     text-align: left;
+
+    @include breakpoint(laptop) {
+      margin-top: 40px;
+    }
   }
 
   &__more-info-button {
@@ -150,14 +260,18 @@
     overflow: hidden;
     transition: max-height 0.5s ease-in-out;
 
-    &--hide {
-      display: none;
+    @include breakpoint(laptop) {
+      margin-top: 40px;
     }
   }
 
   &__cast {
     @include body-s;
     margin-bottom: 6px;
+
+    @include breakpoint(tabletS) {
+      @include body-m;
+    }
   }
 
   &__bold {
@@ -169,5 +283,23 @@
     top: -60px;
     padding: 0 16px;
     margin-top: 30px;
+
+    @include breakpoint(tabletS) {
+      width: 50%;
+      margin: 30px auto 0;
+    }
+
+    @include breakpoint(laptop) {
+      width: 30%;
+    }
+
+    @include breakpoint(desktopS) {
+      width: 25%;
+    }
+
+    @include breakpoint(desktopL) {
+      max-width: 330px;
+      margin: 40px auto 0;
+    }
   }
 }

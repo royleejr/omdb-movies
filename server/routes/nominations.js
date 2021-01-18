@@ -3,6 +3,7 @@ const router = express.Router();
 const fs = require("fs");
 
 const nominationsData = require("../data/nominationsData.json");
+const nominationsSet = new Set();
 
 router.get("/", (req, res) => {
   res.send(nominationsData).status(200);
@@ -16,13 +17,21 @@ router.post("/", (req, res) => {
     if (nominationsData.length === 5) {
       res.status(400).send("There are already 5 entries");
     } else {
-      const newNominationsData = [...nominationsData, req.body];
-      fs.writeFileSync(
-        "./data/nominationsData.json",
-        JSON.stringify(newNominationsData, null, 2)
-      );
+      if (
+        !nominationsData.find((nomination) => {
+          nomination.imdbID === req.body.imdbID;
+        })
+      ) {
+        const newNominationsData = [...nominationsData, req.body];
+        fs.writeFileSync(
+          "./data/nominationsData.json",
+          JSON.stringify(newNominationsData, null, 2)
+        );
 
-      res.send(newNominationsData).status(200);
+        res.send(newNominationsData).status(200);
+      } else {
+        res.send("Already have entry");
+      }
     }
   }
 });
