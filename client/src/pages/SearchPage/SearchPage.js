@@ -170,6 +170,10 @@ export default function SearchPage() {
               above.
             </p>
             <p className="search__message-two">
+              You can press the Movie Details button to learn more about the
+              movie.
+            </p>
+            <p className="search__message">
               Nominate up to 5 movies for the upcoming Shoppies!
             </p>
           </div>
