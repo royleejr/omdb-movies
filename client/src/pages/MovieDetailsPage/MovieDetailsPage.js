@@ -27,11 +27,12 @@ export default function MovieDetailsPage({ match }) {
     moreInfoContainer.setAttribute("style", "max-height: 0px");
 
     const getMovie = axios.get(
-      `http://localhost:5000/search/id/${match.params.movieId}`
+      `https://omdb-movie-server.herokuapp.com/search/id/${match.params.movieId}`
     );
 
     Promise.all([getMovie, getNominations()]).then((response) => {
       if (response[0].status === 200) {
+        console.log(response);
         setMovieDetails(response[0].data);
       }
       if (response[1].status === 200) {

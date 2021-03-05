@@ -114,6 +114,7 @@ export default function SearchPage() {
       `https://omdb-movie-server.herokuapp.com/search/${movieInput}/${moviePage}`
     );
     if (res) {
+      console.log(res);
       if (res.Response !== "False") {
         if (moviePage > 1) {
           setMoviesData(moviesData.concat(res));
