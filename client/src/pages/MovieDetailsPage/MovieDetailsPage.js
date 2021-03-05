@@ -32,7 +32,6 @@ export default function MovieDetailsPage({ match }) {
 
     Promise.all([getMovie, getNominations()]).then((response) => {
       if (response[0].status === 200) {
-        console.log(response);
         setMovieDetails(response[0].data);
       }
       if (response[1].status === 200) {
