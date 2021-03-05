@@ -47,50 +47,60 @@ export default function SearchPage() {
     const banner = document.getElementsByClassName("banner")[0];
     const bannerText = document.getElementsByClassName("banner__message")[0];
     if (text === "Remove") {
-      banner.classList.remove("banner--hide");
-      bannerText.innerText = "Successfully removed nomination!";
-      setTimeout(() => {
-        banner.classList.add("banner--hide");
-      }, 2000);
       removeNomination(movie)
         .then((response) => {
           setNominations(response.data);
+          banner.classList.remove("banner--hide");
+          bannerText.innerText = "Successfully removed nomination!";
+          setTimeout(() => {
+            banner.classList.add("banner--hide");
+          }, 2000);
         })
         .catch((error) => {
-          console.log(error);
+          banner.classList.remove("banner--hide");
+          bannerText.innerText = `Failed to remove. error: ${error}`;
+          setTimeout(() => {
+            banner.classList.add("banner--hide");
+          }, 2000);
         });
     } else {
       if (nominations.length < 4) {
-        banner.classList.remove("banner--hide");
-        bannerText.innerText = "Successfully added nomination!";
-        setTimeout(() => {
-          banner.classList.add("banner--hide");
-        }, 2000);
-
         addNomination(movie)
           .then((response) => {
             if (response.data) {
               setNominations(response.data);
+              banner.classList.remove("banner--hide");
+              bannerText.innerText = "Successfully added nomination!";
+              setTimeout(() => {
+                banner.classList.add("banner--hide");
+              }, 2000);
             }
           })
           .catch((error) => {
-            console.log(error);
+            banner.classList.remove("banner--hide");
+            bannerText.innerText = `Failed to nominate. error: ${error}`;
+            setTimeout(() => {
+              banner.classList.add("banner--hide");
+            }, 2000);
           });
       } else if (nominations.length === 4) {
-        banner.classList.remove("banner--hide");
-        bannerText.innerText = "You have finished making 5 nominations!";
-        setTimeout(() => {
-          banner.classList.add("banner--hide");
-        }, 2000);
-
         addNomination(movie)
           .then((response) => {
             if (response.data) {
               setNominations(response.data);
+              banner.classList.remove("banner--hide");
+              bannerText.innerText = "You have finished making 5 nominations!";
+              setTimeout(() => {
+                banner.classList.add("banner--hide");
+              }, 2000);
             }
           })
           .catch((error) => {
-            console.log(error);
+            banner.classList.remove("banner--hide");
+            bannerText.innerText = `Failed to nominate. error: ${error}`;
+            setTimeout(() => {
+              banner.classList.add("banner--hide");
+            }, 2000);
           });
       } else {
         banner.classList.remove("banner--hide");
@@ -114,7 +124,6 @@ export default function SearchPage() {
       `https://omdb-movie-server.herokuapp.com/search/${movieInput}/${moviePage}`
     );
     if (res) {
-      console.log(res);
       if (res.Response !== "False") {
         if (moviePage > 1) {
           setMoviesData(moviesData.concat(res));

@@ -23,17 +23,21 @@ export default function NominationsPage() {
   const handleRemove = (movie) => {
     const banner = document.getElementsByClassName("banner")[0];
     const bannerText = document.getElementsByClassName("banner__message")[0];
-    banner.classList.remove("banner--hide");
-    bannerText.innerText = "Successfully removed nomination!";
-    setTimeout(() => {
-      banner.classList.add("banner--hide");
-    }, 2000);
     removeNomination(movie)
       .then((response) => {
         setNominations(response.data);
+        banner.classList.remove("banner--hide");
+        bannerText.innerText = "Successfully removed nomination!";
+        setTimeout(() => {
+          banner.classList.add("banner--hide");
+        }, 2000);
       })
       .catch((error) => {
-        console.log(error);
+        banner.classList.remove("banner--hide");
+        bannerText.innerText = `Could not remove. Error: ${error}`;
+        setTimeout(() => {
+          banner.classList.add("banner--hide");
+        }, 2000);
       });
   };
 

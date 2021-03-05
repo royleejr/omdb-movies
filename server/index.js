@@ -9,8 +9,8 @@ const nominationsRoute = require("./routes/nominations.js");
 app.use(cors());
 app.use(express.json());
 
-app.use("/search", searchRoute);
 app.use("/nominations", nominationsRoute);
+app.use("/search", searchRoute);
 
 app.listen(port, () => {
   console.log("The server is running");
