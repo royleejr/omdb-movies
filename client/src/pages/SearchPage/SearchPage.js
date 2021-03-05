@@ -65,6 +65,7 @@ export default function SearchPage() {
         });
     } else {
       if (nominations.length < 4) {
+        console.log("adding");
         addNomination(movie)
           .then((response) => {
             if (response.data) {
