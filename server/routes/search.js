@@ -26,7 +26,10 @@ router.get("/id/:id", (req, res) => {
 });
 
 router.get("/:title/:page", (req, res) => {
-  const { title, page } = req.params;
+  let { title, page } = req.params;
+  const titleString = `${title}`;
+  title = titleString.trim();
+
   axios
     .get(
       `http://www.omdbapi.com/?apikey=c457f6e5&s=${title}&type=movie&page=${page}`
@@ -38,10 +41,14 @@ router.get("/:title/:page", (req, res) => {
         newData = [];
       }
       if (response.data.Search) {
+        let sendingData = [];
         response.data.Search.forEach((movie) => {
-          movieIdsSet.add(movie.imdbID);
+          if (!movieIdsSet.has(movie.imdbID)) {
+            sendingData.push(movie);
+            movieIdsSet.add(movie.imdbID);
+          }
         });
-        res.send(response.data.Search);
+        res.send(sendingData);
 
         if (!toggle) {
           toggle = true;

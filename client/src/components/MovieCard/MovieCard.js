@@ -42,7 +42,7 @@ export default function MovieCard({
             <div className="movie-card__nominate">
               <Button
                 text={
-                  Array.isArray(nominations) && nominations.length > 1
+                  Array.isArray(nominations) && nominations.length >= 1
                     ? nominations.find((nom) => nom.imdbID === movie.imdbID)
                       ? "Remove"
                       : "Nominate"

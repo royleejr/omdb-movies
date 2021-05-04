@@ -3,6 +3,7 @@ import { ReactComponent as SearchSvg } from "../../assets/icons/search.svg";
 import MovieCard from "../../components/MovieCard/MovieCard";
 import Button from "../../components/shared/Button/Button";
 import Banner from "../../components/shared/Banner/Banner";
+import LoadingSpinner from "../../components/shared/LoadingSpinner/LoadingSpinner";
 import {
   getNominations,
   addNomination,
@@ -18,6 +19,8 @@ export default function SearchPage() {
   const [moviePage, setMoviePage] = useState(1);
   const [nominations, setNominations] = useState([]);
   const [moreAvailable, setMoreAvailable] = useState(true);
+  const [searching, setSearching] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     getNominations()
@@ -29,9 +32,16 @@ export default function SearchPage() {
       });
   }, []);
 
+  useEffect(() => {}, [moviesData]);
+
   useEffect(() => {
-    if (movieInput) {
+    if (movieInput !== "") {
       fetchMovies();
+    } else {
+      setMovieInput("");
+      setMoviePage(1);
+      setErrorMessage("");
+      setMoviesData([]);
     }
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [movieInput]);
@@ -43,72 +53,67 @@ export default function SearchPage() {
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [moviePage]);
 
-  const handleNominations = (movie, text) => {
+  const bannerShow = (type, error) => {
     const banner = document.getElementsByClassName("banner")[0];
     const bannerText = document.getElementsByClassName("banner__message")[0];
+    if (!error) {
+      banner.classList.remove("banner--hide");
+      if (type === "remove") {
+        bannerText.innerText = "Successfully removed nomination!";
+      } else if (type === "add") {
+        bannerText.innerText = "Successfully added nomination!";
+      } else if (type === "finished") {
+        bannerText.innerText = "You have finished making 5 nominations!";
+      } else if (type === "full") {
+        bannerText.innerText = "Failed to nominate. You already have 5!";
+      }
+      setTimeout(() => {
+        banner.classList.add("banner--hide");
+      }, 2000);
+    } else {
+      banner.classList.remove("banner--hide");
+      bannerText.innerText = `Failed to remove. error: ${error}`;
+      setTimeout(() => {
+        banner.classList.add("banner--hide");
+      }, 2000);
+    }
+  };
+
+  const handleNominations = (movie, text) => {
     if (text === "Remove") {
       removeNomination(movie)
         .then((response) => {
           setNominations(response.data);
-          banner.classList.remove("banner--hide");
-          bannerText.innerText = "Successfully removed nomination!";
-          setTimeout(() => {
-            banner.classList.add("banner--hide");
-          }, 2000);
+          bannerShow("remove");
         })
         .catch((error) => {
-          banner.classList.remove("banner--hide");
-          bannerText.innerText = `Failed to remove. error: ${error}`;
-          setTimeout(() => {
-            banner.classList.add("banner--hide");
-          }, 2000);
+          bannerShow("remove", error);
         });
     } else {
       if (nominations.length < 4) {
-        console.log("adding");
         addNomination(movie)
           .then((response) => {
             if (response.data) {
               setNominations(response.data);
-              banner.classList.remove("banner--hide");
-              bannerText.innerText = "Successfully added nomination!";
-              setTimeout(() => {
-                banner.classList.add("banner--hide");
-              }, 2000);
+              bannerShow("add");
             }
           })
           .catch((error) => {
-            banner.classList.remove("banner--hide");
-            bannerText.innerText = `Failed to nominate. error: ${error}`;
-            setTimeout(() => {
-              banner.classList.add("banner--hide");
-            }, 2000);
+            bannerShow("add", error);
           });
       } else if (nominations.length === 4) {
         addNomination(movie)
           .then((response) => {
             if (response.data) {
               setNominations(response.data);
-              banner.classList.remove("banner--hide");
-              bannerText.innerText = "You have finished making 5 nominations!";
-              setTimeout(() => {
-                banner.classList.add("banner--hide");
-              }, 2000);
+              bannerShow("finished");
             }
           })
           .catch((error) => {
-            banner.classList.remove("banner--hide");
-            bannerText.innerText = `Failed to nominate. error: ${error}`;
-            setTimeout(() => {
-              banner.classList.add("banner--hide");
-            }, 2000);
+            bannerShow("finished", error);
           });
       } else {
-        banner.classList.remove("banner--hide");
-        bannerText.innerText = "Failed to nominate. You already have 5!";
-        setTimeout(() => {
-          banner.classList.add("banner--hide");
-        }, 2000);
+        bannerShow("full");
       }
     }
   };
@@ -121,11 +126,14 @@ export default function SearchPage() {
   };
 
   const fetchMovies = async () => {
+    setSearching(true);
     const res = await cancelApiRequests(
-      `https://omdb-movie-server.herokuapp.com/search/${movieInput}/${moviePage}`
+      `http://localhost:8080/search/${movieInput}/${moviePage}`
     );
     if (res) {
+      setSearching(false);
       if (res.Response !== "False") {
+        setErrorMessage("");
         if (moviePage > 1) {
           setMoviesData(moviesData.concat(res));
         } else {
@@ -134,17 +142,20 @@ export default function SearchPage() {
         }
       } else {
         if (res.Error !== "Too many results." || !res) {
+          console.log("HAPPENING");
+          setErrorMessage(res.Error);
           setMoreAvailable(false);
           if (moviePage === 1) {
             setMoviesData([]);
           }
-        }
-        if (res.Error === "Too many results.") {
+        } else if (res.Error === "Too many results.") {
           setMoviesData([]);
         }
       }
     } else {
+      setSearching(false);
       setMoviesData([]);
+      setErrorMessage("");
     }
   };
 
@@ -174,7 +185,10 @@ export default function SearchPage() {
       </section>
 
       <section className="search__movie-card-container">
-        {!moviesData.length > 0 ? (
+        {!moviesData.length > 0 &&
+        !errorMessage &&
+        !searching &&
+        !movieInput ? (
           <div className="search__message-container">
             <p className="search__message">
               To get started, please enter a movie title into the search bar
@@ -188,8 +202,12 @@ export default function SearchPage() {
               Nominate up to 5 movies for the upcoming Shoppies!
             </p>
           </div>
-        ) : null}
-        {moviesData
+        ) : (
+          <div className="search__message-container">
+            <p className="search__message">{errorMessage}</p>
+          </div>
+        )}
+        {moviesData && moviesData.length > 0
           ? moviesData.map((movie) => (
               <MovieCard
                 type="search"
@@ -200,6 +218,11 @@ export default function SearchPage() {
               />
             ))
           : null}
+        {searching ? (
+          <div className="search__loading-spinner">
+            <LoadingSpinner />
+          </div>
+        ) : null}
       </section>
       {moreAvailable && moviesData.length > 0 ? (
         <div className="search__show-button-container">
