@@ -3,11 +3,13 @@ import { ReactComponent as SearchSvg } from "../../assets/icons/search.svg";
 import MovieCard from "../../components/MovieCard/MovieCard";
 import Button from "../../components/shared/Button/Button";
 import Banner from "../../components/shared/Banner/Banner";
+import Carousel from "../../components/Carousel/Carousel";
 import LoadingSpinner from "../../components/shared/LoadingSpinner/LoadingSpinner";
 import {
   getNominations,
   addNomination,
   removeNomination,
+  getTopRated,
 } from "../../utilities/nominationsApiRequests";
 import { cancelApiRequests } from "../../utilities/cancelApiRequests";
 import "./SearchPage.scss";
@@ -21,8 +23,21 @@ export default function SearchPage() {
   const [moreAvailable, setMoreAvailable] = useState(true);
   const [searching, setSearching] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [topRated, setTopRated] = useState([]);
 
   useEffect(() => {
+    getTopRated()
+      .then((response) => {
+        const topRatedData = [];
+        response.forEach((movie) => {
+          topRatedData.push(movie.data);
+        });
+        setTopRated(topRatedData);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     getNominations()
       .then((response) => {
         setNominations(response.data);
@@ -31,8 +46,6 @@ export default function SearchPage() {
         console.log(error);
       });
   }, []);
-
-  useEffect(() => {}, [moviesData]);
 
   useEffect(() => {
     if (movieInput !== "") {
@@ -183,6 +196,11 @@ export default function SearchPage() {
           </div>
         </form>
       </section>
+      <Carousel
+        data={topRated}
+        nominations={nominations}
+        handleNominations={handleNominations}
+      />
 
       <section className="search__movie-card-container">
         {!moviesData.length > 0 &&

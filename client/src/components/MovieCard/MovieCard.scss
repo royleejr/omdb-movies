@@ -4,6 +4,20 @@
   display: flex;
   position: relative;
 
+  &--carousel {
+    margin: 20px 0;
+    flex-direction: row-reverse;
+    align-items: center;
+
+    @include breakpoint(tabletS) {
+      width: 48%;
+    }
+
+    @include breakpoint(laptop) {
+      width: 32%;
+    }
+  }
+
   &--search {
     margin: 20px 0;
     flex-direction: row-reverse;
@@ -42,11 +56,6 @@
       margin: 24px 0;
     }
 
-    // @include breakpoint(desktopS) {
-    //   width: calc(25% - 32px);
-    //   margin: 16px 0;
-    // }
-
     @include breakpoint(desktopS) {
       width: calc(20% - 32px);
       margin: 16px 0;
@@ -60,6 +69,14 @@
     flex-grow: 0;
     height: 0;
     overflow: hidden;
+
+    &--carousel {
+      z-index: 0;
+      width: 65%;
+      padding-top: calc(0.65 * 322 / 223 * 100%);
+      border-radius: 10px;
+      box-shadow: 1px -1px 28px -4px rgba(0, 0, 0, 0.55);
+    }
 
     &--search {
       z-index: 0;
@@ -104,6 +121,16 @@
     );
     color: $color-white;
 
+    &--carousel {
+      z-index: 1;
+      position: absolute;
+      left: 0;
+      flex-shrink: 0;
+      width: 55%;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
     &--search {
       z-index: 1;
       position: absolute;
@@ -132,11 +159,25 @@
     border: 1px solid $color-white;
     border-radius: 10px;
     margin-bottom: 8px;
+
+    &--carousel {
+      @include label;
+    }
   }
 
   &__title {
     @include heading-5;
-    margin-bottom: 24px;
+    margin-bottom: 10px;
+
+    @include breakpoint(tabletS) {
+      margin-bottom: 24px;
+    }
+
+    &--carousel {
+      @include body;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
   }
 
   &__link {
@@ -151,7 +192,7 @@
   }
 
   &__nominate {
-    margin-top: 10px;
+    margin-top: 5px;
   }
 
   &__links-container {

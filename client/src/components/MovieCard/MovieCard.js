@@ -29,12 +29,16 @@ export default function MovieCard({
       <div
         className={`movie-card__description movie-card__description--${type}`}
       >
-        <span className="movie-card__year">{movie.Year}</span>
+        <span className={`movie-card__year movie-card__year--${type}`}>
+          {movie.Year}
+        </span>
         <Dotdotdot clamp={6}>
-          <h2 className="movie-card__title">{movie.Title}</h2>
+          <h2 className={`movie-card__title movie-card__title--${type}`}>
+            {movie.Title}
+          </h2>
         </Dotdotdot>
 
-        {type === "search" ? (
+        {type === "search" || type === "carousel" ? (
           <>
             <Link className="movie-card__link" to={`/movie/${movie.imdbID}`}>
               <Button text="Movie Details" type="primary" link={"link"} />

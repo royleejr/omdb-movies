@@ -1,0 +1,47 @@
+@import "../../styles/globals.scss";
+
+.carousel {
+  width: 100%;
+  @include resolution-padding;
+  display: flex;
+  position: relative;
+
+  // overflow-x: hidden;
+
+  &__slider {
+    width: 100%;
+    display: flex;
+    position: relative;
+  }
+
+  &__card {
+    width: 90%;
+    flex-shrink: 0;
+    margin-right: 10px;
+  }
+
+  &__right-arrow {
+    @include button;
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 40px;
+    width: 40px;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: $color-white;
+    box-shadow: 0px 0px 22px 5px rgba(0, 0, 0, 0.42);
+    z-index: 20;
+
+    // &:hover {
+    //   background
+    // }
+  }
+
+  &__right-arrow-icon {
+    height: 20px;
+    width: 20px;
+    fill: $color-pink;
+  }
+}
