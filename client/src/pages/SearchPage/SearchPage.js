@@ -32,6 +32,7 @@ export default function SearchPage() {
         response.forEach((movie) => {
           topRatedData.push(movie.data);
         });
+        console.log(topRatedData);
         setTopRated(topRatedData);
       })
       .catch((error) => {
@@ -197,6 +198,7 @@ export default function SearchPage() {
         </form>
       </section>
       <Carousel
+        category={"Top Rated"}
         data={topRated}
         nominations={nominations}
         handleNominations={handleNominations}

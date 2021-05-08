@@ -23,6 +23,16 @@ const getTopRated = async () => {
   const movie8 = axios.get("http://localhost:8080/search/id/tt0110912");
   const movie9 = axios.get("http://localhost:8080/search/id/tt0060196");
   const movie10 = axios.get("http://localhost:8080/search/id/tt0120737");
+  const movie11 = axios.get("http://localhost:8080/search/id/tt0137523");
+  const movie12 = axios.get("http://localhost:8080/search/id/tt0109830");
+  const movie13 = axios.get("http://localhost:8080/search/id/tt1375666");
+  const movie14 = axios.get("http://localhost:8080/search/id/tt0167261");
+  const movie15 = axios.get("http://localhost:8080/search/id/tt0080684");
+  const movie16 = axios.get("http://localhost:8080/search/id/tt0133093");
+  const movie17 = axios.get("http://localhost:8080/search/id/tt0099685");
+  const movie18 = axios.get("http://localhost:8080/search/id/tt0073486");
+  const movie19 = axios.get("http://localhost:8080/search/id/tt0047478");
+  const movie20 = axios.get("http://localhost:8080/search/id/tt0118799");
 
   return await axios.all([
     movie1,
@@ -35,6 +45,16 @@ const getTopRated = async () => {
     movie8,
     movie9,
     movie10,
+    movie11,
+    movie12,
+    movie13,
+    movie14,
+    movie15,
+    movie16,
+    movie17,
+    movie18,
+    movie19,
+    movie20,
   ]);
 };
 

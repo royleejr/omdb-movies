@@ -5,27 +5,44 @@
   @include resolution-padding;
   display: flex;
   position: relative;
+  overflow-x: hidden;
 
-  // overflow-x: hidden;
+  &__title {
+    @include heading-3;
+    @include resolution-padding;
+    margin-top: 20px;
+    color: $color-black;
+
+    @include breakpoint(tabletS) {
+      margin-top: 40px;
+      margin-bottom: 20px;
+    }
+  }
 
   &__slider {
     width: 100%;
     display: flex;
     position: relative;
+    transition: 0.6s ease-in-out;
   }
 
   &__card {
     width: 90%;
     flex-shrink: 0;
     margin-right: 10px;
+    margin-left: 12px;
+
+    @include breakpoint(tabletS) {
+      width: 45%;
+    }
+    // @include breakpoint(laptop) {
+    //   width: 30%;
+    // }
   }
 
-  &__right-arrow {
+  &__arrow {
     @include button;
     position: absolute;
-    right: 16px;
-    top: 50%;
-    transform: translateY(-50%);
     height: 40px;
     width: 40px;
     padding: 10px;
@@ -33,13 +50,27 @@
     background-color: $color-white;
     box-shadow: 0px 0px 22px 5px rgba(0, 0, 0, 0.42);
     z-index: 20;
+    top: 50%;
+    transform: translateY(-50%);
 
-    // &:hover {
-    //   background
-    // }
+    &--hide {
+      display: none;
+    }
+
+    &--left {
+      left: 4px;
+    }
+
+    &--right {
+      right: 4px;
+
+      // &:hover {
+      //   background
+      // }
+    }
   }
 
-  &__right-arrow-icon {
+  &__arrow-icon {
     height: 20px;
     width: 20px;
     fill: $color-pink;

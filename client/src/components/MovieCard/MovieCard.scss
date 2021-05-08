@@ -8,14 +8,6 @@
     margin: 20px 0;
     flex-direction: row-reverse;
     align-items: center;
-
-    @include breakpoint(tabletS) {
-      width: 48%;
-    }
-
-    @include breakpoint(laptop) {
-      width: 32%;
-    }
   }
 
   &--search {
@@ -162,6 +154,10 @@
 
     &--carousel {
       @include label;
+
+      @include breakpoint(laptop) {
+        @include body-s;
+      }
     }
   }
 
@@ -173,10 +169,18 @@
       margin-bottom: 24px;
     }
 
+    @include breakpoint(laptop) {
+      line-height: 1.1;
+    }
+
     &--carousel {
       @include body;
       line-height: 1;
       margin-bottom: 10px;
+
+      @include breakpoint(laptop) {
+        @include heading-5;
+      }
     }
   }
 
