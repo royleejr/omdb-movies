@@ -51,7 +51,6 @@ I am responsible for the full design and development of this responsive site.
 
 ### Ideas for Future Enhancements:
 
-- Add loading animations when waiting for search results, adding or removing nominations.
 - Add entry animations when search results start to populate.
 - Save the search after the user leaves the search page so if the user returns to the page, the results are still displayed.
 - Create shareable links.
