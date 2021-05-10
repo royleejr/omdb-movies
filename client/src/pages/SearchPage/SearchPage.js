@@ -182,7 +182,7 @@ export default function SearchPage() {
         </form>
       </section>
 
-      {!moviesData.length > 0 && !errorMessage && loading && !movieInput ? (
+      {!moviesData.length > 0 && !errorMessage && !loading && !movieInput ? (
         <>
           <div className="search__message-container">
             <p className="search__message">
