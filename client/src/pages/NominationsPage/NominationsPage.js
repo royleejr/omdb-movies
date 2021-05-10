@@ -5,18 +5,23 @@ import {
 } from "../../utilities/nominationsApiRequests";
 import MovieCard from "../../components/MovieCard/MovieCard";
 import Banner from "../../components/shared/Banner/Banner";
+import LoadingSpinner from "../../components/shared/LoadingSpinner/LoadingSpinner";
 import "./NominationsPage.scss";
 
 export default function NominationsPage() {
   const [nominations, setNominations] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     getNominations()
       .then((response) => {
         setNominations(response.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
+        setLoading(false);
       });
   }, []);
 
@@ -46,7 +51,7 @@ export default function NominationsPage() {
       <section className="nominations__hero">
         <h1 className="nominations__heading">YOUR NOMINATIONS</h1>
       </section>
-      {!nominations.length > 0 ? (
+      {!nominations.length > 0 && !loading ? (
         <div className="nominations__message-container">
           <p className="nominations__message">
             You currently have no nominations.
@@ -57,7 +62,12 @@ export default function NominationsPage() {
         </div>
       ) : null}
       <section className="nominations__movie-card-container">
-        {nominations && nominations.length > 0
+        {loading && (
+          <div className="nominations__loading">
+            <LoadingSpinner />
+          </div>
+        )}
+        {nominations && nominations.length > 0 && !loading
           ? nominations.map((movie) => {
               return (
                 <MovieCard

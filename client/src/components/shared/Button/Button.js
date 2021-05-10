@@ -11,7 +11,11 @@ export default function Button({
   onClick,
 }) {
   const clickHandler = () => {
-    if (type === "secondary" || type === "large") {
+    if (
+      type === "secondary" ||
+      type === "large" ||
+      type === "carousel-secondary"
+    ) {
       handleNominations(movie, text);
     } else if (type === "tertiary" && !link) {
       handleRemove(movie);

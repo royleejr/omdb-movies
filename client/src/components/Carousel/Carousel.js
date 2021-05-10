@@ -24,6 +24,7 @@ export default function Carousel({ handleNominations, nominations, category }) {
   }, []);
 
   useEffect(() => {
+    setLoading(true);
     getCategoryMovies(category)
       .then((response) => {
         const limitReached = response.some((movie) => {
@@ -33,14 +34,14 @@ export default function Carousel({ handleNominations, nominations, category }) {
           setErrorMessage(
             "The daily request limit for the OMDB API has been reached."
           );
-          setLoading(true);
+          setLoading(false);
         } else {
           const movieData = [];
           response.forEach((movie) => {
             movieData.push(movie.data);
           });
           setData(movieData);
-          setLoading(true);
+          setLoading(false);
         }
       })
       .catch((error) => {
@@ -202,7 +203,7 @@ export default function Carousel({ handleNominations, nominations, category }) {
     <>
       <div className="carousel">
         <h2 className="carousel__title">{category}</h2>
-        {data.length > 0 && loading && (
+        {data.length > 0 && !loading && (
           <ul className="carousel__pagination">{pagination()}</ul>
         )}
         <div className="carousel__container">
@@ -213,7 +214,7 @@ export default function Carousel({ handleNominations, nominations, category }) {
             className="carousel__slider"
             style={{ transform: "translate3d(0,0,0)" }}
           >
-            {data && loading ? (
+            {data && !loading ? (
               data.map((movie) => {
                 return (
                   <div
@@ -235,7 +236,7 @@ export default function Carousel({ handleNominations, nominations, category }) {
               </div>
             )}
           </div>
-          {data.length > 0 && loading && (
+          {data.length > 0 && !loading && (
             <>
               <button
                 className="carousel__arrow carousel__arrow--left carousel__arrow--hide"

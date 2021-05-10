@@ -20,7 +20,7 @@ export default function SearchPage() {
   const [moviePage, setMoviePage] = useState(1);
   const [nominations, setNominations] = useState([]);
   const [moreAvailable, setMoreAvailable] = useState(true);
-  const [searching, setSearching] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
@@ -125,13 +125,12 @@ export default function SearchPage() {
   };
 
   const fetchMovies = async () => {
-    setSearching(true);
+    setLoading(false);
     const res = await cancelApiRequests(
       `http://localhost:8080/search/${movieInput}/${moviePage}`
     );
-    console.log(res);
     if (res) {
-      setSearching(false);
+      setLoading(true);
       if (res.Response !== "False") {
         setErrorMessage("");
         if (moviePage > 1) {
@@ -152,7 +151,7 @@ export default function SearchPage() {
         }
       }
     } else {
-      setSearching(false);
+      setLoading(true);
       setMoviesData([]);
       setErrorMessage("");
     }
@@ -183,7 +182,7 @@ export default function SearchPage() {
         </form>
       </section>
 
-      {!moviesData.length > 0 && !errorMessage && !searching && !movieInput ? (
+      {!moviesData.length > 0 && !errorMessage && loading && !movieInput ? (
         <>
           <div className="search__message-container">
             <p className="search__message">
@@ -237,7 +236,7 @@ export default function SearchPage() {
               />
             ))
           : null}
-        {searching ? (
+        {!loading ? (
           <div className="search__loading-spinner">
             <LoadingSpinner />
           </div>

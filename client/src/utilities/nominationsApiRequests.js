@@ -104,7 +104,6 @@ const removeNomination = (movie) => {
 };
 
 const getCategoryMovies = async (category) => {
-  console.log("api", category);
   if (category === "Top Rated") {
     return await axios.all(topRatedRequest);
   } else if (category === "Action") {
