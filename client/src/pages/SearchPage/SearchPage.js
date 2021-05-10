@@ -20,7 +20,7 @@ export default function SearchPage() {
   const [moviePage, setMoviePage] = useState(1);
   const [nominations, setNominations] = useState([]);
   const [moreAvailable, setMoreAvailable] = useState(true);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
@@ -125,12 +125,12 @@ export default function SearchPage() {
   };
 
   const fetchMovies = async () => {
-    setLoading(false);
+    setLoading(true);
     const res = await cancelApiRequests(
       `https://omdb-movie-server.herokuapp.com/search/${movieInput}/${moviePage}`
     );
     if (res) {
-      setLoading(true);
+      setLoading(false);
       if (res.Response !== "False") {
         setErrorMessage("");
         if (moviePage > 1) {
@@ -151,7 +151,7 @@ export default function SearchPage() {
         }
       }
     } else {
-      setLoading(true);
+      setLoading(false);
       setMoviesData([]);
       setErrorMessage("");
     }
@@ -236,7 +236,7 @@ export default function SearchPage() {
               />
             ))
           : null}
-        {!loading ? (
+        {loading ? (
           <div className="search__loading-spinner">
             <LoadingSpinner />
           </div>
