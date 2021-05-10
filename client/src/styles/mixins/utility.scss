@@ -65,6 +65,30 @@
   }
 }
 
+@mixin carousel-padding {
+  padding: 0 40px;
+
+  @include breakpoint(tabletS) {
+    padding: 0 64px;
+  }
+
+  @include breakpoint(laptop) {
+    padding: 0 160px;
+  }
+
+  @include breakpoint(desktopS) {
+    padding: 0 100px;
+  }
+
+  @include breakpoint(desktopL) {
+    padding: 0 120px;
+  }
+
+  @include breakpoint(desktopL) {
+    padding: 0 120px;
+  }
+}
+
 @mixin hero-sizing {
   width: 100%;
   height: 170px;

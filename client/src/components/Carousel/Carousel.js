@@ -1,24 +1,52 @@
 import React, { useEffect, useState } from "react";
 import MovieCard from "../MovieCard/MovieCard";
-
+import LoadingSpinner from "../shared/LoadingSpinner/LoadingSpinner";
+import { getCategoryMovies } from "../../utilities/nominationsApiRequests";
 import { ReactComponent as RightArrow } from "../../assets/icons/right-arrow.svg";
 import { ReactComponent as LeftArrow } from "../../assets/icons/left-arrow.svg";
 
 import "./Carousel.scss";
 
-export default function Carousel({
-  data,
-  handleNominations,
-  nominations,
-  category,
-}) {
+export default function Carousel({ handleNominations, nominations, category }) {
   const [carouselPosition, setCarouselPosition] = useState(0);
   const [windowSize, setWindowSize] = useState("");
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     window.addEventListener("resize", resizeListener);
     resizeListener();
+
+    return () => {
+      window.removeEventListener("resize", resizeListener);
+    };
   }, []);
+
+  useEffect(() => {
+    getCategoryMovies(category)
+      .then((response) => {
+        const limitReached = response.some((movie) => {
+          return movie.data === "Request limit reached!";
+        });
+        if (limitReached) {
+          setErrorMessage(
+            "The daily request limit for the OMDB API has been reached."
+          );
+          setLoading(true);
+        } else {
+          const movieData = [];
+          response.forEach((movie) => {
+            movieData.push(movie.data);
+          });
+          setData(movieData);
+          setLoading(true);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [category]);
 
   const resizeListener = () => {
     let windowWidth = window.innerWidth;
@@ -47,53 +75,26 @@ export default function Carousel({
       "carousel__arrow--left"
     )[0];
 
+    slider.setAttribute(
+      "style",
+      `transform: translate3d(calc(${-100 * (carouselPosition + 1)}% - ${
+        22 * (carouselPosition + 1)
+      }px), 0, 0);`
+    );
+
     if (windowSize === "mobile") {
-      slider.setAttribute(
-        "style",
-        `transform: translate3d(calc(${-90 * (carouselPosition + 1)}% - ${
-          22 * (carouselPosition + 1)
-        }px), 0, 0);`
-      );
       if (carouselPosition === data.length - 2) {
         rightClickButton.classList.add("carousel__arrow--hide");
       }
     } else if (windowSize === "tabletS" || windowSize === "laptop") {
-      slider.setAttribute(
-        "style",
-        `transform: translate3d(calc(${-90 * (carouselPosition + 1)}% - ${
-          44 * (carouselPosition + 1)
-        }px), 0, 0);`
-      );
       if (carouselPosition === data.length / 2 - 2) {
         rightClickButton.classList.add("carousel__arrow--hide");
       }
     } else if (windowSize === "desktopS") {
-      slider.setAttribute(
-        "style",
-        `transform: translate3d(calc(${-96 * (carouselPosition + 1)}% - ${
-          97 * (carouselPosition + 1)
-        }px), 0, 0);`
-      );
-      if (carouselPosition === data.length / 4 - 2) {
-        rightClickButton.classList.add("carousel__arrow--hide");
-      }
-    } else if (windowSize === "desktopL") {
-      slider.setAttribute(
-        "style",
-        `transform: translate3d(calc(${-94 * (carouselPosition + 1)}% - ${
-          88 * (carouselPosition + 1)
-        }px), 0, 0);`
-      );
       if (carouselPosition === data.length / 4 - 2) {
         rightClickButton.classList.add("carousel__arrow--hide");
       }
     } else if (windowSize === "desktopXL") {
-      slider.setAttribute(
-        "style",
-        `transform: translate3d(calc(${-95 * (carouselPosition + 1)}% - ${
-          115 * (carouselPosition + 1)
-        }px), 0, 0);`
-      );
       if (carouselPosition === data.length / 5 - 2) {
         rightClickButton.classList.add("carousel__arrow--hide");
       }
@@ -115,53 +116,26 @@ export default function Carousel({
       "carousel__arrow--left"
     )[0];
 
+    slider.setAttribute(
+      "style",
+      `transform: translate3d(calc(${-100 * (carouselPosition - 1)}% - ${
+        22 * (carouselPosition - 1)
+      }px), 0, 0);`
+    );
+
     if (windowSize === "mobile") {
-      slider.setAttribute(
-        "style",
-        `transform: translate3d(calc(${-90 * (carouselPosition - 1)}% - ${
-          22 * (carouselPosition - 1)
-        }px), 0, 0);`
-      );
       if (carouselPosition === data.length - 1) {
         rightClickButton.classList.remove("carousel__arrow--hide");
       }
     } else if (windowSize === "tabletS" || windowSize === "laptop") {
-      slider.setAttribute(
-        "style",
-        `transform: translate3d(calc(${-90 * (carouselPosition - 1)}% - ${
-          44 * (carouselPosition - 1)
-        }px), 0, 0);`
-      );
       if (carouselPosition === data.length / 2 - 1) {
         rightClickButton.classList.remove("carousel__arrow--hide");
       }
     } else if (windowSize === "desktopS") {
-      slider.setAttribute(
-        "style",
-        `transform: translate3d(calc(${-96 * (carouselPosition - 1)}% - ${
-          97 * (carouselPosition - 1)
-        }px), 0, 0);`
-      );
-      if (carouselPosition === data.length / 4 - 1) {
-        rightClickButton.classList.remove("carousel__arrow--hide");
-      }
-    } else if (windowSize === "desktopL") {
-      slider.setAttribute(
-        "style",
-        `transform: translate3d(calc(${-96 * (carouselPosition - 1)}% - ${
-          97 * (carouselPosition - 1)
-        }px), 0, 0);`
-      );
       if (carouselPosition === data.length / 4 - 1) {
         rightClickButton.classList.remove("carousel__arrow--hide");
       }
     } else if (windowSize === "desktopXL") {
-      slider.setAttribute(
-        "style",
-        `transform: translate3d(calc(${-95 * (carouselPosition - 1)}% - ${
-          115 * (carouselPosition - 1)
-        }px), 0, 0);`
-      );
       if (carouselPosition === data.length / 5 - 1) {
         rightClickButton.classList.remove("carousel__arrow--hide");
       }
@@ -174,16 +148,73 @@ export default function Carousel({
     setCarouselPosition(carouselPosition - 1);
   };
 
+  const pagination = () => {
+    if (data) {
+      if (windowSize === "mobile") {
+        let paginationMobileArray = [];
+        for (let i = 0; i < data.length; i++) {
+          paginationMobileArray.push(
+            <li
+              id={i === carouselPosition ? "active" : null}
+              key={`mobile-${i}`}
+            ></li>
+          );
+        }
+        return paginationMobileArray;
+      } else if (windowSize === "tabletS" || windowSize === "laptop") {
+        let paginationTabletArray = [];
+        for (let i = 0; i < data.length / 2; i++) {
+          paginationTabletArray.push(
+            <li
+              id={i === carouselPosition ? "active" : null}
+              key={`tablet-${i}`}
+            ></li>
+          );
+        }
+        return paginationTabletArray;
+      } else if (windowSize === "desktopS" || windowSize === "desktopL") {
+        let paginationDesktopSArray = [];
+        for (let i = 0; i < data.length / 4; i++) {
+          paginationDesktopSArray.push(
+            <li
+              id={i === carouselPosition ? "active" : null}
+              key={`tablet-${i}`}
+            ></li>
+          );
+        }
+        return paginationDesktopSArray;
+      } else if (windowSize === "desktopXL") {
+        let paginationDesktopXLArray = [];
+        for (let i = 0; i < data.length / 5; i++) {
+          paginationDesktopXLArray.push(
+            <li
+              id={i === carouselPosition ? "active" : null}
+              key={`tablet-${i}`}
+            ></li>
+          );
+        }
+        return paginationDesktopXLArray;
+      }
+    }
+  };
+
   return (
     <>
-      <h2 className="carousel__title">{category}</h2>
       <div className="carousel">
-        <div
-          className="carousel__slider"
-          style={{ transform: "translate3d(0,0,0)" }}
-        >
-          {data
-            ? data.map((movie) => {
+        <h2 className="carousel__title">{category}</h2>
+        {data.length > 0 && loading && (
+          <ul className="carousel__pagination">{pagination()}</ul>
+        )}
+        <div className="carousel__container">
+          {errorMessage && (
+            <div className="carousel__error-message">ERROR: {errorMessage}</div>
+          )}
+          <div
+            className="carousel__slider"
+            style={{ transform: "translate3d(0,0,0)" }}
+          >
+            {data && loading ? (
+              data.map((movie) => {
                 return (
                   <div
                     className="carousel__card"
@@ -198,21 +229,29 @@ export default function Carousel({
                   </div>
                 );
               })
-            : null}
+            ) : (
+              <div className="carousel__loading">
+                <LoadingSpinner />
+              </div>
+            )}
+          </div>
+          {data.length > 0 && loading && (
+            <>
+              <button
+                className="carousel__arrow carousel__arrow--left carousel__arrow--hide"
+                onClick={leftClickHandler}
+              >
+                <LeftArrow className="carousel__arrow-icon" />
+              </button>
+              <button
+                className="carousel__arrow carousel__arrow--right"
+                onClick={rightClickHandler}
+              >
+                <RightArrow className="carousel__arrow-icon" />
+              </button>
+            </>
+          )}
         </div>
-        <button
-          className="carousel__arrow carousel__arrow--left carousel__arrow--hide"
-          onClick={leftClickHandler}
-        >
-          <LeftArrow className="carousel__arrow-icon" />
-        </button>
-
-        <button
-          className="carousel__arrow carousel__arrow--right"
-          onClick={rightClickHandler}
-        >
-          <RightArrow className="carousel__arrow-icon" />
-        </button>
       </div>
     </>
   );

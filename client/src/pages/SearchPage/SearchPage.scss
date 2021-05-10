@@ -133,6 +133,7 @@
 
   &__message-container {
     @include body-s;
+    @include resolution-padding;
     width: 100%;
     margin-top: 60px;
     color: $color-black-80;

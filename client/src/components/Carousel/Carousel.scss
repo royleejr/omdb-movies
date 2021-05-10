@@ -1,33 +1,62 @@
 @import "../../styles/globals.scss";
 
 .carousel {
-  width: 100%;
-  @include resolution-padding;
-  display: flex;
   position: relative;
+  width: 100%;
+  margin-top: 40px;
   overflow-x: hidden;
 
   &__title {
-    @include heading-3;
     @include resolution-padding;
-    margin-top: 20px;
+    @include heading-3;
     color: $color-black;
 
     @include breakpoint(tabletS) {
-      margin-top: 40px;
-      margin-bottom: 20px;
+      margin-bottom: 40px;
+    }
+  }
+
+  &__pagination {
+    @include resolution-padding;
+    display: block;
+    margin-top: 20px;
+    text-align: right;
+    list-style-type: none;
+
+    & li {
+      display: inline-block;
+      width: 12px;
+      height: 2px;
+      background-color: $color-black-50;
+      margin-left: 1px;
+    }
+  }
+
+  &__container {
+    @include carousel-padding;
+    position: relative;
+  }
+
+  &__error-message {
+    @include body-l;
+    margin-top: 80px;
+    margin-bottom: 40px;
+    text-align: center;
+    color: $color-pink;
+
+    @include breakpoint(tabletS) {
+      @include heading-5;
     }
   }
 
   &__slider {
     width: 100%;
     display: flex;
-    position: relative;
     transition: 0.6s ease-in-out;
   }
 
   &__card {
-    width: 90%;
+    width: 100%;
     flex-shrink: 0;
     margin-right: 10px;
 
@@ -36,18 +65,21 @@
     }
 
     @include breakpoint(tabletS) {
-      width: 45%;
+      width: calc((100% - 22px) / 2);
     }
     @include breakpoint(desktopS) {
-      width: 24%;
-    }
-    @include breakpoint(desktopL) {
-      width: 23.5%;
+      width: calc((100% - 66px) / 4);
     }
 
     @include breakpoint(desktopXL) {
-      width: 19%;
+      width: calc((100% - 88px) / 5);
     }
+  }
+
+  &__loading {
+    margin: 0 auto;
+    margin-top: 80px;
+    margin-bottom: 30px;
   }
 
   &__arrow {
@@ -68,15 +100,43 @@
     }
 
     &--left {
-      left: 4px;
+      left: 10px;
+
+      @include breakpoint(tabletS) {
+        left: -30px;
+      }
+
+      @include breakpoint(laptop) {
+        left: 124px;
+      }
+
+      @include breakpoint(desktopS) {
+        left: 70px;
+      }
+
+      @include breakpoint(desktopL) {
+        left: 90px;
+      }
     }
 
     &--right {
-      right: 4px;
+      right: 10px;
 
-      // &:hover {
-      //   background
-      // }
+      @include breakpoint(tabletS) {
+        right: -30px;
+      }
+
+      @include breakpoint(laptop) {
+        right: 124px;
+      }
+
+      @include breakpoint(desktopS) {
+        right: 70px;
+      }
+
+      @include breakpoint(desktopL) {
+        right: 90px;
+      }
     }
   }
 
@@ -85,4 +145,8 @@
     width: 20px;
     fill: $color-pink;
   }
+}
+
+#active {
+  background-color: $color-pink;
 }

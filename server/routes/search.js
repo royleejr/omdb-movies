@@ -21,7 +21,9 @@ router.get("/id/:id", (req, res) => {
       }
     })
     .catch((error) => {
-      console.log(error);
+      if (error.response.data.Response === "False") {
+        res.send(error.response.data.Error).status(500);
+      }
     });
 });
 
@@ -67,7 +69,8 @@ router.get("/:title/:page", (req, res) => {
       }
     })
     .catch((error) => {
-      console.log(error);
+      // console.log(error.response.data);
+      res.send(error.response.data).status(500);
     });
 });
 
@@ -136,7 +139,7 @@ const fetchNonExactData = (title, res) => {
       }
     })
     .catch((error) => {
-      console.log(error);
+      // console.log(error);
     });
 };
 

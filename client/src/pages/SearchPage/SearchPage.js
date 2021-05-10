@@ -9,7 +9,6 @@ import {
   getNominations,
   addNomination,
   removeNomination,
-  getTopRated,
 } from "../../utilities/nominationsApiRequests";
 import { cancelApiRequests } from "../../utilities/cancelApiRequests";
 import "./SearchPage.scss";
@@ -23,22 +22,8 @@ export default function SearchPage() {
   const [moreAvailable, setMoreAvailable] = useState(true);
   const [searching, setSearching] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [topRated, setTopRated] = useState([]);
 
   useEffect(() => {
-    getTopRated()
-      .then((response) => {
-        const topRatedData = [];
-        response.forEach((movie) => {
-          topRatedData.push(movie.data);
-        });
-        console.log(topRatedData);
-        setTopRated(topRatedData);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
     getNominations()
       .then((response) => {
         setNominations(response.data);
@@ -144,6 +129,7 @@ export default function SearchPage() {
     const res = await cancelApiRequests(
       `http://localhost:8080/search/${movieInput}/${moviePage}`
     );
+    console.log(res);
     if (res) {
       setSearching(false);
       if (res.Response !== "False") {
@@ -198,30 +184,47 @@ export default function SearchPage() {
       </section>
 
       {!moviesData.length > 0 && !errorMessage && !searching && !movieInput ? (
-        <div className="search__message-container">
-          <p className="search__message">
-            To get started, please enter a movie title into the search bar
-            above.
-          </p>
-          <p className="search__message-two">
-            You can press the Movie Details button to learn more about the
-            movie.
-          </p>
-          <p className="search__message">
-            Nominate up to 5 movies for the upcoming Shoppies!
-          </p>
-        </div>
+        <>
+          <div className="search__message-container">
+            <p className="search__message">
+              To get started, please enter a movie title into the search bar
+              above.
+            </p>
+            <p className="search__message-two">
+              You can press the Movie Details button to learn more about the
+              movie.
+            </p>
+            <p className="search__message">
+              Nominate up to 5 movies for the upcoming Shoppies!
+            </p>
+          </div>
+
+          <Carousel
+            category={"Top Rated"}
+            nominations={nominations}
+            handleNominations={handleNominations}
+          />
+          <Carousel
+            category={"Action"}
+            nominations={nominations}
+            handleNominations={handleNominations}
+          />
+          <Carousel
+            category={"Comedy"}
+            nominations={nominations}
+            handleNominations={handleNominations}
+          />
+          <Carousel
+            category={"Animated"}
+            nominations={nominations}
+            handleNominations={handleNominations}
+          />
+        </>
       ) : (
         <div className="search__message-container">
-          <p className="search__message">{errorMessage}</p>
+          <p className="search__message-two">ERROR: {errorMessage}</p>
         </div>
       )}
-      <Carousel
-        category={"Top Rated"}
-        data={topRated}
-        nominations={nominations}
-        handleNominations={handleNominations}
-      />
       <section className="search__movie-card-container">
         {moviesData && moviesData.length > 0
           ? moviesData.map((movie) => (
