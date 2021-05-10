@@ -30,14 +30,24 @@
     width: 90%;
     flex-shrink: 0;
     margin-right: 10px;
-    margin-left: 12px;
+
+    &:not(:first-child) {
+      margin-left: 12px;
+    }
 
     @include breakpoint(tabletS) {
       width: 45%;
     }
-    // @include breakpoint(laptop) {
-    //   width: 30%;
-    // }
+    @include breakpoint(desktopS) {
+      width: 24%;
+    }
+    @include breakpoint(desktopL) {
+      width: 23.5%;
+    }
+
+    @include breakpoint(desktopXL) {
+      width: 19%;
+    }
   }
 
   &__arrow {

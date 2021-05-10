@@ -41,7 +41,11 @@ export default function MovieCard({
         {type === "search" || type === "carousel" ? (
           <>
             <Link className="movie-card__link" to={`/movie/${movie.imdbID}`}>
-              <Button text="Movie Details" type="primary" link={"link"} />
+              <Button
+                text="Movie Details"
+                type={type === "search" ? "primary" : "carousel"}
+                link={"link"}
+              />
             </Link>
             <div className="movie-card__nominate">
               <Button
@@ -52,7 +56,7 @@ export default function MovieCard({
                       : "Nominate"
                     : null
                 }
-                type="secondary"
+                type={type === "carousel" ? "carousel-secondary" : "secondary"}
                 movie={movie}
                 handleNominations={handleNominations}
                 nominations={nominations}

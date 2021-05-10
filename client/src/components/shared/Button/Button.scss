@@ -15,6 +15,43 @@
     }
   }
 
+  &--carousel {
+    @include button-base;
+    background-color: $color-white;
+    color: $color-pink;
+
+    &:hover {
+      background-color: $color-pink;
+      color: $color-white;
+    }
+
+    @include breakpoint(desktopS) {
+      font-size: 10px;
+    }
+
+    @include breakpoint(desktopL) {
+      font-size: 12px;
+    }
+  }
+
+  &--carousel-secondary {
+    @include button-base;
+    background-color: $color-pink;
+    color: $color-white;
+
+    &:hover {
+      background-color: $color-white;
+      color: $color-pink;
+    }
+
+    @include breakpoint(desktopS) {
+      font-size: 10px;
+    }
+    @include breakpoint(desktopL) {
+      font-size: 12px;
+    }
+  }
+
   &--secondary {
     @include button-base;
     background-color: $color-pink;

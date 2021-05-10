@@ -33,6 +33,12 @@
       @content;
     }
   }
+
+  @if $breakpoint == desktopXL {
+    @media (min-width: $breakpoint-desktopXL-width-min) {
+      @content;
+    }
+  }
 }
 
 @mixin resolution-padding {
@@ -48,6 +54,10 @@
 
   @include breakpoint(desktopS) {
     padding: 0 100px;
+  }
+
+  @include breakpoint(desktopL) {
+    padding: 0 120px;
   }
 
   @include breakpoint(desktopL) {

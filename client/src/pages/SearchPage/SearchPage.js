@@ -156,7 +156,6 @@ export default function SearchPage() {
         }
       } else {
         if (res.Error !== "Too many results." || !res) {
-          console.log("HAPPENING");
           setErrorMessage(res.Error);
           setMoreAvailable(false);
           if (moviePage === 1) {
@@ -197,36 +196,33 @@ export default function SearchPage() {
           </div>
         </form>
       </section>
+
+      {!moviesData.length > 0 && !errorMessage && !searching && !movieInput ? (
+        <div className="search__message-container">
+          <p className="search__message">
+            To get started, please enter a movie title into the search bar
+            above.
+          </p>
+          <p className="search__message-two">
+            You can press the Movie Details button to learn more about the
+            movie.
+          </p>
+          <p className="search__message">
+            Nominate up to 5 movies for the upcoming Shoppies!
+          </p>
+        </div>
+      ) : (
+        <div className="search__message-container">
+          <p className="search__message">{errorMessage}</p>
+        </div>
+      )}
       <Carousel
         category={"Top Rated"}
         data={topRated}
         nominations={nominations}
         handleNominations={handleNominations}
       />
-
       <section className="search__movie-card-container">
-        {!moviesData.length > 0 &&
-        !errorMessage &&
-        !searching &&
-        !movieInput ? (
-          <div className="search__message-container">
-            <p className="search__message">
-              To get started, please enter a movie title into the search bar
-              above.
-            </p>
-            <p className="search__message-two">
-              You can press the Movie Details button to learn more about the
-              movie.
-            </p>
-            <p className="search__message">
-              Nominate up to 5 movies for the upcoming Shoppies!
-            </p>
-          </div>
-        ) : (
-          <div className="search__message-container">
-            <p className="search__message">{errorMessage}</p>
-          </div>
-        )}
         {moviesData && moviesData.length > 0
           ? moviesData.map((movie) => (
               <MovieCard

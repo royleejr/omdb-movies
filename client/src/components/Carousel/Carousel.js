@@ -31,8 +31,10 @@ export default function Carousel({
       setWindowSize("laptop");
     } else if (windowWidth < 1440 && windowWidth >= 1280) {
       setWindowSize("desktopS");
-    } else {
+    } else if (windowWidth < 1680 && windowWidth >= 1440) {
       setWindowSize("desktopL");
+    } else {
+      setWindowSize("desktopXL");
     }
   };
 
@@ -44,8 +46,6 @@ export default function Carousel({
     const leftClickButton = document.getElementsByClassName(
       "carousel__arrow--left"
     )[0];
-
-    console.log(windowSize);
 
     if (windowSize === "mobile") {
       slider.setAttribute(
@@ -65,6 +65,36 @@ export default function Carousel({
         }px), 0, 0);`
       );
       if (carouselPosition === data.length / 2 - 2) {
+        rightClickButton.classList.add("carousel__arrow--hide");
+      }
+    } else if (windowSize === "desktopS") {
+      slider.setAttribute(
+        "style",
+        `transform: translate3d(calc(${-96 * (carouselPosition + 1)}% - ${
+          97 * (carouselPosition + 1)
+        }px), 0, 0);`
+      );
+      if (carouselPosition === data.length / 4 - 2) {
+        rightClickButton.classList.add("carousel__arrow--hide");
+      }
+    } else if (windowSize === "desktopL") {
+      slider.setAttribute(
+        "style",
+        `transform: translate3d(calc(${-94 * (carouselPosition + 1)}% - ${
+          88 * (carouselPosition + 1)
+        }px), 0, 0);`
+      );
+      if (carouselPosition === data.length / 4 - 2) {
+        rightClickButton.classList.add("carousel__arrow--hide");
+      }
+    } else if (windowSize === "desktopXL") {
+      slider.setAttribute(
+        "style",
+        `transform: translate3d(calc(${-95 * (carouselPosition + 1)}% - ${
+          115 * (carouselPosition + 1)
+        }px), 0, 0);`
+      );
+      if (carouselPosition === data.length / 5 - 2) {
         rightClickButton.classList.add("carousel__arrow--hide");
       }
     }
@@ -103,6 +133,36 @@ export default function Carousel({
         }px), 0, 0);`
       );
       if (carouselPosition === data.length / 2 - 1) {
+        rightClickButton.classList.remove("carousel__arrow--hide");
+      }
+    } else if (windowSize === "desktopS") {
+      slider.setAttribute(
+        "style",
+        `transform: translate3d(calc(${-96 * (carouselPosition - 1)}% - ${
+          97 * (carouselPosition - 1)
+        }px), 0, 0);`
+      );
+      if (carouselPosition === data.length / 4 - 1) {
+        rightClickButton.classList.remove("carousel__arrow--hide");
+      }
+    } else if (windowSize === "desktopL") {
+      slider.setAttribute(
+        "style",
+        `transform: translate3d(calc(${-96 * (carouselPosition - 1)}% - ${
+          97 * (carouselPosition - 1)
+        }px), 0, 0);`
+      );
+      if (carouselPosition === data.length / 4 - 1) {
+        rightClickButton.classList.remove("carousel__arrow--hide");
+      }
+    } else if (windowSize === "desktopXL") {
+      slider.setAttribute(
+        "style",
+        `transform: translate3d(calc(${-95 * (carouselPosition - 1)}% - ${
+          115 * (carouselPosition - 1)
+        }px), 0, 0);`
+      );
+      if (carouselPosition === data.length / 5 - 1) {
         rightClickButton.classList.remove("carousel__arrow--hide");
       }
     }
