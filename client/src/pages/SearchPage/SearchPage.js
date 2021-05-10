@@ -207,24 +207,28 @@ export default function SearchPage() {
           <Carousel
             category={"Top Rated"}
             variant={1}
+            id={0}
             nominations={nominations}
             handleNominations={handleNominations}
           />
           <Carousel
             category={"Action"}
             variant={2}
+            id={1}
             nominations={nominations}
             handleNominations={handleNominations}
           />
           <Carousel
             category={"Comedy"}
             variant={1}
+            id={2}
             nominations={nominations}
             handleNominations={handleNominations}
           />
           <Carousel
             category={"Animated"}
             variant={2}
+            id={3}
             nominations={nominations}
             handleNominations={handleNominations}
           />

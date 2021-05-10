@@ -12,6 +12,7 @@ export default function Carousel({
   nominations,
   category,
   variant,
+  id,
 }) {
   const [carouselPosition, setCarouselPosition] = useState(0);
   const [windowSize, setWindowSize] = useState("");
@@ -65,13 +66,13 @@ export default function Carousel({
   };
 
   const rightClickHandler = () => {
-    const slider = document.getElementsByClassName("carousel__slider")[0];
+    const slider = document.getElementsByClassName("carousel__slider")[id];
     const rightClickButton = document.getElementsByClassName(
       "carousel__arrow--right"
-    )[0];
+    )[id];
     const leftClickButton = document.getElementsByClassName(
       "carousel__arrow--left"
-    )[0];
+    )[id];
 
     slider.setAttribute(
       "style",
@@ -106,13 +107,13 @@ export default function Carousel({
   };
 
   const leftClickHandler = () => {
-    const slider = document.getElementsByClassName("carousel__slider")[0];
+    const slider = document.getElementsByClassName("carousel__slider")[id];
     const rightClickButton = document.getElementsByClassName(
       "carousel__arrow--right"
-    )[0];
+    )[id];
     const leftClickButton = document.getElementsByClassName(
       "carousel__arrow--left"
-    )[0];
+    )[id];
 
     slider.setAttribute(
       "style",
