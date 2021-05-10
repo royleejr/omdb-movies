@@ -62,7 +62,6 @@ export default function MovieDetailsPage({ match }) {
     const moreInfoContainer = document.getElementsByClassName(
       "movie-details__more-info"
     )[0];
-
     if (moreInfoContainer) {
       if (infoOpen) {
         moreInfoContainer.setAttribute(
