@@ -24,6 +24,10 @@ export default function SearchPage() {
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
+    console.log(loading);
+  }, [loading]);
+
+  useEffect(() => {
     getNominations()
       .then((response) => {
         setNominations(response.data);
@@ -140,6 +144,7 @@ export default function SearchPage() {
           setMoviesData(res);
         }
       } else {
+        console.log("HaPPENING", res.Error);
         if (res.Error !== "Too many results." || !res) {
           setErrorMessage(res.Error);
           setMoreAvailable(false);
@@ -148,6 +153,12 @@ export default function SearchPage() {
           }
         } else if (res.Error === "Too many results.") {
           setMoviesData([]);
+          setErrorMessage(res.Error);
+        } else if (res.Error === "limit reached!") {
+          setMoviesData([]);
+          setErrorMessage(
+            "The daily request limit for the OMDB API has been reached."
+          );
         }
       }
     } else {
@@ -219,7 +230,8 @@ export default function SearchPage() {
             handleNominations={handleNominations}
           />
         </>
-      ) : (
+      ) : null}
+      {!loading && errorMessage && !moviesData.length > 0 && movieInput && (
         <div className="search__message-container">
           <p className="search__message-two">ERROR: {errorMessage}</p>
         </div>
