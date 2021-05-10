@@ -24,10 +24,6 @@ export default function SearchPage() {
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    console.log(errorMessage);
-  }, [errorMessage]);
-
-  useEffect(() => {
     getNominations()
       .then((response) => {
         setNominations(response.data);
@@ -41,7 +37,6 @@ export default function SearchPage() {
     if (movieInput !== "") {
       fetchMovies();
     } else {
-      console.log("EMPTY MOVIE INPUT", movieInput);
       setMovieInput("");
       setMoviePage(1);
       setErrorMessage("");
@@ -132,7 +127,7 @@ export default function SearchPage() {
   const fetchMovies = async () => {
     setLoading(true);
     const res = await cancelApiRequests(
-      `http://localhost:8080/search/${movieInput}/${moviePage}`
+      `https://omdb-movie-server.herokuapp.com/search/${movieInput}/${moviePage}`
     );
     if (res) {
       setLoading(false);
