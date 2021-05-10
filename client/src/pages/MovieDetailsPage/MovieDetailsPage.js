@@ -19,7 +19,7 @@ export default function MovieDetailsPage({ match }) {
   const [infoHeight, setInfoHeight] = useState(0);
   const [movieDetails, setMovieDetails] = useState({});
   const [nominations, setNominations] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const moreInfoContainer = document.getElementsByClassName(
@@ -30,13 +30,27 @@ export default function MovieDetailsPage({ match }) {
       moreInfoContainer.setAttribute("style", "max-height: 0px");
     }
     const getMovie = axios.get(
-      `https://omdb-movie-server.herokuapp.com/search/id/${match.params.movieId}`
+      `http://localhost:8080/search/id/${match.params.movieId}`
     );
-
+    setLoading(true);
     Promise.all([getMovie, getNominations()]).then((response) => {
       if (response[0].status === 200) {
         setMovieDetails(response[0].data);
         setLoading(false);
+
+        const moreInfoContainer = document.getElementsByClassName(
+          "movie-details__more-info"
+        )[0];
+        if (moreInfoContainer) {
+          if (infoOpen) {
+            moreInfoContainer.setAttribute(
+              "style",
+              `max-height: ${infoHeight + 500}px`
+            );
+          } else {
+            moreInfoContainer.setAttribute("style", `max-height: 0`);
+          }
+        }
       }
       if (response[1].status === 200) {
         setNominations(response[1].data);
@@ -48,6 +62,7 @@ export default function MovieDetailsPage({ match }) {
     const moreInfoContainer = document.getElementsByClassName(
       "movie-details__more-info"
     )[0];
+
     if (moreInfoContainer) {
       if (infoOpen) {
         moreInfoContainer.setAttribute(

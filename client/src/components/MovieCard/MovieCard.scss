@@ -121,6 +121,14 @@
       width: 55%;
       padding: 20px;
       border-radius: 10px;
+
+      &--2 {
+        background-image: linear-gradient(
+          to bottom,
+          $color-black-70 60%,
+          $color-black-70
+        );
+      }
     }
 
     &--search {

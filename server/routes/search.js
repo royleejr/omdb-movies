@@ -10,11 +10,12 @@ let extraPage = 1;
 //toggle is so the we don't create a new set when there hasn't been any intial data results because movie title is too short and produces no results.
 let toggle = false;
 
+//http://www.omdbapi.com/?apikey=c457f6e5
+//http://www.omdbapi.com/?apikey=915d701
+
 router.get("/id/:id", (req, res) => {
   axios
-    .get(
-      `http://www.omdbapi.com/?apikey=c457f6e5&i=${req.params.id}&type=movie`
-    )
+    .get(`http://www.omdbapi.com/?apikey=915d701&i=${req.params.id}&type=movie`)
     .then((response) => {
       if (response.data) {
         res.send(response.data).status(200);
@@ -34,7 +35,7 @@ router.get("/:title/:page", (req, res) => {
 
   axios
     .get(
-      `http://www.omdbapi.com/?apikey=c457f6e5&s=${title}&type=movie&page=${page}`
+      `http://www.omdbapi.com/?apikey=915d701&s=${title}&type=movie&page=${page}`
     )
     .then((response) => {
       //only want to rest the set when we are dealing with a new move title search and not just different pages for the same movie title search.
@@ -77,7 +78,7 @@ router.get("/:title/:page", (req, res) => {
 const fetchNonExactData = (title, res) => {
   axios
     .get(
-      `http://www.omdbapi.com/?apikey=c457f6e5&s=${title}*&type=movie&page=${extraPage}`
+      `http://www.omdbapi.com/?apikey=915d701&s=${title}*&type=movie&page=${extraPage}`
     )
     .then((response) => {
       if (response.data.Search) {

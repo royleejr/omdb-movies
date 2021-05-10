@@ -24,8 +24,8 @@ export default function SearchPage() {
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    console.log(loading);
-  }, [loading]);
+    console.log(errorMessage);
+  }, [errorMessage]);
 
   useEffect(() => {
     getNominations()
@@ -41,6 +41,7 @@ export default function SearchPage() {
     if (movieInput !== "") {
       fetchMovies();
     } else {
+      console.log("EMPTY MOVIE INPUT", movieInput);
       setMovieInput("");
       setMoviePage(1);
       setErrorMessage("");
@@ -131,7 +132,7 @@ export default function SearchPage() {
   const fetchMovies = async () => {
     setLoading(true);
     const res = await cancelApiRequests(
-      `https://omdb-movie-server.herokuapp.com/search/${movieInput}/${moviePage}`
+      `http://localhost:8080/search/${movieInput}/${moviePage}`
     );
     if (res) {
       setLoading(false);
@@ -144,7 +145,6 @@ export default function SearchPage() {
           setMoviesData(res);
         }
       } else {
-        console.log("HaPPENING", res.Error);
         if (res.Error !== "Too many results." || !res) {
           setErrorMessage(res.Error);
           setMoreAvailable(false);
@@ -176,7 +176,7 @@ export default function SearchPage() {
   return (
     <div className="search">
       <section className="search__hero">
-        <form className="search__form">
+        <div className="search__form">
           <input
             className="search__input"
             aria-label="enter movie title"
@@ -190,10 +190,10 @@ export default function SearchPage() {
           <div className="search__search-container" aria-label="submit search">
             <SearchSvg className="search__search-icon" />
           </div>
-        </form>
+        </div>
       </section>
 
-      {!moviesData.length > 0 && !errorMessage && !loading && !movieInput ? (
+      {!moviesData.length > 0 && !loading && !movieInput ? (
         <>
           <div className="search__message-container">
             <p className="search__message">
@@ -211,21 +211,25 @@ export default function SearchPage() {
 
           <Carousel
             category={"Top Rated"}
+            variant={1}
             nominations={nominations}
             handleNominations={handleNominations}
           />
           <Carousel
             category={"Action"}
+            variant={2}
             nominations={nominations}
             handleNominations={handleNominations}
           />
           <Carousel
             category={"Comedy"}
+            variant={1}
             nominations={nominations}
             handleNominations={handleNominations}
           />
           <Carousel
             category={"Animated"}
+            variant={2}
             nominations={nominations}
             handleNominations={handleNominations}
           />

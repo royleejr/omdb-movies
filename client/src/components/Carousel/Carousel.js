@@ -7,7 +7,12 @@ import { ReactComponent as LeftArrow } from "../../assets/icons/left-arrow.svg";
 
 import "./Carousel.scss";
 
-export default function Carousel({ handleNominations, nominations, category }) {
+export default function Carousel({
+  handleNominations,
+  nominations,
+  category,
+  variant,
+}) {
   const [carouselPosition, setCarouselPosition] = useState(0);
   const [windowSize, setWindowSize] = useState("");
   const [data, setData] = useState([]);
@@ -27,25 +32,17 @@ export default function Carousel({ handleNominations, nominations, category }) {
     setLoading(true);
     getCategoryMovies(category)
       .then((response) => {
-        const limitReached = response.some((movie) => {
-          return movie.data === "Request limit reached!";
-        });
-        if (limitReached) {
-          setErrorMessage(
-            "The daily request limit for the OMDB API has been reached."
-          );
+        if (response.data.length > 0) {
+          setData(response.data);
           setLoading(false);
         } else {
-          const movieData = [];
-          response.forEach((movie) => {
-            movieData.push(movie.data);
-          });
-          setData(movieData);
+          setErrorMessage("Could not retrieve category data");
           setLoading(false);
         }
       })
       .catch((error) => {
-        console.log(error);
+        setErrorMessage(error);
+        setLoading(false);
       });
   }, [category]);
 
@@ -219,10 +216,11 @@ export default function Carousel({ handleNominations, nominations, category }) {
                 return (
                   <div
                     className="carousel__card"
-                    key={`carousel-${movie.imdbID}`}
+                    key={`carousel-${category}-${movie.imdbID}`}
                   >
                     <MovieCard
                       type="carousel"
+                      variant={variant}
                       movie={movie}
                       handleNominations={handleNominations}
                       nominations={nominations}

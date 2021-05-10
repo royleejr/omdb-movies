@@ -10,6 +10,7 @@ export default function MovieCard({
   nominations,
   handleNominations,
   handleRemove,
+  variant,
 }) {
   return (
     <article className={`movie-card movie-card--${type}`}>
@@ -27,7 +28,7 @@ export default function MovieCard({
         ></img>
       </div>
       <div
-        className={`movie-card__description movie-card__description--${type}`}
+        className={`movie-card__description movie-card__description--${type} movie-card__description--${type}--${variant}`}
       >
         <span className={`movie-card__year movie-card__year--${type}`}>
           {movie.Year}
