@@ -127,7 +127,7 @@ export default function SearchPage() {
   const fetchMovies = async () => {
     setLoading(true);
     const res = await cancelApiRequests(
-      `https://omdb-movie-server.herokuapp.com/search/${movieInput}/${moviePage}`
+      `https://omdb-movies-server.onrender.com/search/${movieInput}/${moviePage}`
     );
     if (res) {
       setLoading(false);
